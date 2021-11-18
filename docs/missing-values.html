@@ -24,7 +24,7 @@
 <meta name="author" content="Alexandria Guo, Julia Wang, Kevia Qu" />
 
 
-<meta name="date" content="2021-11-11" />
+<meta name="date" content="2021-11-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -101,6 +101,11 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<pre><code>## 
+##  Downloading file 1 of 2: `billboard.csv`
+##  Downloading file 2 of 2: `audio_features.csv`</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="1440" /></p>
+<p>In our exploration of the dataset, we note that the <code>spotify_track_id</code> (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 — we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset. We also see that missing <code>spotify_track_preview_url</code> (url) is the second most common missing NA pattern at almost 34-35%. This feature is just a link to a 30 second preview of the song, so we don’t find this pattern particularly impactful, because the feature is probably not going to be used in our project. We believe this is a MCAR “Missing Completely At Random”, since around 50% of the data is missing this feature.</p>
 
 </div>
             </section>

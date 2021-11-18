@@ -8,7 +8,7 @@ knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE)
 ```
 
-```{r}
+```{r, fig.height=10, fig.width=15}
 tuesdata <- tidytuesdayR::tt_load(2021, week = 38)
 spotify <- tuesdata$audio_features
 
@@ -57,6 +57,4 @@ main_data <- missing_patterns %>%
   pivot_longer(cols=!c(pattern,count), names_to = "key")
 ```
 
-In our exploration of the dataset, we note that the `spotify_track_id` (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset.
-
-`spotify_track_preview_url` (url) is missing from more than (%) of our dataset
+In our exploration of the dataset, we note that the `spotify_track_id` (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset. We also see that missing `spotify_track_preview_url` (url) is the second most common missing NA pattern at almost 34-35%. This feature is just a link to a 30 second preview of the song, so we don't find this pattern particularly impactful, because the feature is probably not going to be used in our project. We believe this is a MCAR "Missing Completely At Random", since around 50% of the data is missing this feature. We see that the features `song_id` (id), `artist` (art), and `song` (name) do not have any missing data. We believe this is because song_id is a unique identifier that is the concatenation of artist and song, and if song and artist were missing, the entire row would probably be missing since you would be unable to find the right song.

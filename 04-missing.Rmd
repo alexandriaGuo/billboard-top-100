@@ -1,1 +1,62 @@
 # Missing values
+
+```{r, include=FALSE}
+source('plot_missing.R')
+library(mi)
+
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2021, week = 38)
+spotify <- tuesdata$audio_features
+
+spotify <- spotify %>% rename(
+  id = song_id,
+  art = performer,
+  nam = song,
+  gen = spotify_genre,
+  trk = spotify_track_id,
+  url = spotify_track_preview_url,
+  dur = spotify_track_duration_ms,
+  exp = spotify_track_explicit,
+  alb = spotify_track_album,
+  dnc = danceability,
+  eng = energy,
+  key = key,
+  ld = loudness,
+  mde = mode,
+  sph = speechiness,
+  aco = acousticness,
+  ins = instrumentalness,
+  liv = liveness,
+  val = valence,
+  tem = tempo,
+  sig = time_signature,
+  pop = spotify_track_popularity
+)
+
+plot_missing(spotify, percent=TRUE)
+```
+
+```{r, eval=FALSE}
+x <- missing_data.frame(as.data.frame(spotify))
+image(x)
+```
+
+```{r, eval=FALSE}
+missing_patterns <- data.frame(is.na(spotify)) %>%
+  group_by_all() %>%
+  count(name = "count", sort = TRUE) %>%
+  ungroup()
+
+# main plot
+main_data <- missing_patterns %>%
+  rownames_to_column("pattern") %>%
+  pivot_longer(cols=!c(pattern,count), names_to = "key")
+```
+
+In our exploration of the dataset, we note that the `spotify_track_id` (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset.
+
+`spotify_track_preview_url` (url) is missing from more than (%) of our dataset

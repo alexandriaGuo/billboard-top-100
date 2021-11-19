@@ -1,5 +1,4 @@
 # Missing values
-
 ```{r, include=FALSE}
 source('plot_missing.R')
 library(mi)
@@ -8,10 +7,12 @@ knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE)
 ```
 
-```{r, fig.height=8, fig.width=10}
+```{r, results = 'hide'}
 tuesdata <- tidytuesdayR::tt_load(2021, week = 38)
 spotify <- tuesdata$audio_features
+```
 
+```{r, fig.height=8, fig.width=10}
 spotify <- spotify %>% rename(
   id = song_id,
   art = performer,

@@ -101,11 +101,9 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
-<pre><code>## 
-##  Downloading file 1 of 2: `billboard.csv`
-##  Downloading file 2 of 2: `audio_features.csv`</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="1440" /></p>
-<p>In our exploration of the dataset, we note that the <code>spotify_track_id</code> (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 — we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset. We also see that missing <code>spotify_track_preview_url</code> (url) is the second most common missing NA pattern at almost 34-35%. This feature is just a link to a 30 second preview of the song, so we don’t find this pattern particularly impactful, because the feature is probably not going to be used in our project. We believe this is a MCAR “Missing Completely At Random”, since around 50% of the data is missing this feature.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
+<p>In our exploration of the dataset, we note that the <code>spotify_track_id</code> (trk) can uniquely identify songs on Spotify. Whenever <code>spotify_track_id</code> is missing, all of the audio features are also missing, as in Patterns 3 and 4 — we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without this id. Pattern 10 does not follow this trend, but only occurs in 4 rows total in the entire dataset.</p>
+<p>We also see that missing only <code>spotify_track_preview_url</code> (url) is the second most common missing pattern, at around 34-35%. It is also generally missing from around 50% of our data points; however, this feature is just a link to a 30 second preview of the song. We likely will not find this pattern particularly impactful, as this feature will probably not be utilized in our project. We believe this is feature is MCAR, “Missing Completely At Random.” Additionally, we see that the features <code>song_id</code> (id), <code>artist</code> (art), and <code>song</code> (name) do not have any missing data. We believe this is because <code>song_id</code> is a unique identifier that is the concatenation of the artist and song columns, and if both song and artist data were missing, the entire row would also be missing because it would be impossible to find the right song.</p>
 
 </div>
             </section>

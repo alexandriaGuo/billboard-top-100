@@ -1,5 +1,4 @@
 # Missing values
-
 ```{r, include=FALSE}
 source('plot_missing.R')
 library(mi)
@@ -8,10 +7,12 @@ knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE)
 ```
 
-```{r, fig.height=10, fig.width=15}
+```{r, results = 'hide'}
 tuesdata <- tidytuesdayR::tt_load(2021, week = 38)
 spotify <- tuesdata$audio_features
+```
 
+```{r, fig.height=8, fig.width=10}
 spotify <- spotify %>% rename(
   id = song_id,
   art = performer,
@@ -40,21 +41,6 @@ spotify <- spotify %>% rename(
 plot_missing(spotify, percent=TRUE)
 ```
 
-```{r, eval=FALSE}
-x <- missing_data.frame(as.data.frame(spotify))
-image(x)
-```
+In our exploration of the dataset, we note that the `spotify_track_id` (trk) can uniquely identify songs on Spotify. Whenever `spotify_track_id` is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without this id. Pattern 10 does not follow this trend, but only occurs in 4 rows total in the entire dataset. 
 
-```{r, eval=FALSE}
-missing_patterns <- data.frame(is.na(spotify)) %>%
-  group_by_all() %>%
-  count(name = "count", sort = TRUE) %>%
-  ungroup()
-
-# main plot
-main_data <- missing_patterns %>%
-  rownames_to_column("pattern") %>%
-  pivot_longer(cols=!c(pattern,count), names_to = "key")
-```
-
-In our exploration of the dataset, we note that the `spotify_track_id` (trk) is the main column used to uniquely identify songs on Spotify. Whenever trk is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without the id. Pattern 10 does not follow this pattern, but only occurs in 4 rows total in the dataset. We also see that missing `spotify_track_preview_url` (url) is the second most common missing NA pattern at almost 34-35%. This feature is just a link to a 30 second preview of the song, so we don't find this pattern particularly impactful, because the feature is probably not going to be used in our project. We believe this is a MCAR "Missing Completely At Random", since around 50% of the data is missing this feature. We see that the features `song_id` (id), `artist` (art), and `song` (name) do not have any missing data. We believe this is because song_id is a unique identifier that is the concatenation of artist and song, and if song and artist were missing, the entire row would probably be missing since you would be unable to find the right song.
+We also see that missing only `spotify_track_preview_url` (url) is the second most common missing  pattern, at around 34-35%. It is also generally missing from around 50% of our data points; however, this feature is just a link to a 30 second preview of the song. We likely will not find this pattern particularly impactful, as this feature will probably not be utilized in our project. We believe this is feature is MCAR, "Missing Completely At Random." Additionally, we see that the features `song_id` (id), `artist` (art), and `song` (name) do not have any missing data. We believe this is because `song_id` is a unique identifier that is the concatenation of the artist and song columns, and if both song and artist data were missing, the entire row would also be missing because it would be impossible to find the right song.

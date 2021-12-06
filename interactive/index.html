@@ -2,12 +2,209 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>D3 Page Template</title>
-        <script type="text/javascript" src="../d3.js"></script>
+        <title>Interactive Billboard Top 100 Alluvial plot</title>
+        <script type="text/javascript" src="https://d3js.org/d3.v6.js"></script>
+		<style type="text/css">
+            body {
+                font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+
+            .focus text {
+                font-size: 14px;
+            }
+
+            .tooltip {
+                fill: white;
+                stroke: #000;
+            }
+
+            .tooltip-performer, .tooltip-song, .tooltip-date {
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <script type="text/javascript">
-            // Your beautiful D3 code will go here
+            // create SVG for our alluvial plot
+            // todo update to use top,bottom,right,left padding
+            // todo add chart title
+            var w = 1000
+            var h = 800
+            var padding = 50;
+
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("height", h + padding)
+                .attr("width", w + padding);
+
+            // ingest alluvial csv data
+            var datasetTime, xScale, yScale, xAxis, yAxis;  //Empty, for now
+
+            var parseDate = d3.timeParse("%m/%d/%Y");
+            var formatTime = d3.timeFormat("%b %e");
+
+            var rowConverter = function(d) {
+                return {
+                    song: d.song,
+                    performer: d.performer,
+                    week_id: parseDate(d.week_id),
+                    week_position: parseInt(d.week_position),
+                    genre: d.spotify_genre
+                }
+            };
+
+            d3.csv("billboard_alluvial.csv", rowConverter)
+                .then(function(data) {
+                    dataset = data;
+                    //Create scale functions
+                    xScale = d3.scaleTime()
+                                .domain([
+                                    d3.min(dataset, function(d) { return d.week_id; }),
+                                    d3.max(dataset, function(d) { return d.week_id; })
+                                ])
+                                .range([2*padding, w - padding]);
+
+                    yScale = d3.scaleLinear()
+                                .domain([
+                                    d3.max(dataset, function(d) { return d.week_position; }),
+                                    d3.min(dataset, function(d) { return d.week_position; })
+                                ])
+                                .range([h - padding, padding]);
+
+                    var dateConverter = d3.timeParse("%a %b %d %Y");
+                    var dates = [...new Set(dataset.map(d=>d.week_id).map((dateObject)=>dateObject.toDateString()))];
+                    //Define X axis
+                    xAxis = d3.axisBottom()
+                                .scale(xScale)
+                                .tickValues(dates.map(d=>dateConverter(d)))
+                                .tickFormat(d3.timeFormat("%b %d"));
+
+                    yAxis = d3.axisLeft()
+                                .scale(yScale)
+                                .tickValues(d3.range(1,51))
+
+                    //Create X axis
+                    // todo add x label
+                    svg.append("g")
+                        .attr("class", "axis")
+                        .attr("transform", "translate(0," + (h - padding) + ")")
+                        .call(xAxis);
+
+                    //Create Y axis
+                    // todo add y label
+                    svg.append("g")
+                        .attr("class", "axis")
+                        .attr("transform", "translate(" + 2*padding + ",0)")
+                        .call(yAxis);
+
+                    // create line generator for the alluvial
+                    var line = d3.line()
+                                .x(function(d) { return xScale(d.week_id); })
+                                .y(function(d) { return yScale(d.week_position); });
+
+                    var songNames = Array.from(new Set(dataset.map(x => x.song )));
+                    
+                    // choose a random month to start with
+                    // todo also grab year
+                    var month = dataset[0].week_id.getMonth();
+
+                    // draw each song line
+                    for (let i = 0, len = songNames.length, filteredData; i < len; i++) {
+                        // to do filter on both year and month 
+                        // javascript months start at 0 (January)
+                        filteredData = dataset.filter( x => { return x.week_id.getMonth() == month && x.song == songNames[i]})
+                                    .sort(function(a, b) {return a.week_id - b.week_id });
+                        
+                        // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
+                        if (filteredData.length == 1) {
+                            // todo: add interactivity with the circles as well
+                            songDots = svg.selectAll(`.circle_${i}`)
+                                .data(filteredData)
+                                .enter()
+                                .append("circle")
+                                .attr("cx", function(d) {
+                                    return xScale(d.week_id);
+                                })
+                                .attr("cy", function(d) {
+                                    return yScale(d.week_position);
+                                })
+                                .attr("r", 3);
+                        } else {
+                            songLines = svg.append("path")
+                            .datum(filteredData)
+                            .attr("class", "line")
+                            .attr("d", line)
+                            .attr("fill", "none")
+                            .attr("stroke", "#000")
+                            .attr('stroke-width', "3px");
+
+                            var mousemove = function mousemove() {
+                                var coords = d3.pointer(event,this)
+                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
+                                focus.select(".tooltip-genre").text(filteredData[0].genre);
+                                focus.select(".tooltip-song").text(filteredData[0].song);
+                                focus.select(".tooltip-performer").text(filteredData[0].performer);
+                                var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
+                                                        focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
+                                // +60 to offset for the song/artist text
+                                focus.select(".tooltip").attr("width", tooltipWidth + 60);
+                            };
+
+                            songLines.on("mouseover", function (d) {
+                                    d3.select(this)
+                                        .attr("stroke", "#92D1C3")
+                                    focus.style("display", null);
+                                })
+                                .on("mouseout", function(d) { 
+                                    d3.select(this)
+                                        .attr("stroke", "#000")
+                                    focus.style("display", "none"); 
+                                })
+                                .on("mousemove", mousemove);
+                        }
+                    };
+
+                    // add dummy tooltip in the top right corner, will be updated when we hover over the line
+                    var focus = svg.append("g")
+                        .attr("class", "focus")
+                        .style("display", "none");
+                    
+                    focus.append("rect")
+                        .attr("class", "tooltip")
+                        .attr("height", 70)
+                        .attr("x", 10)
+                        .attr("y", -22)
+                        .attr("rx", 4)
+                        .attr("ry", 4);
+
+                    focus.append("text")
+                        .attr("class", "tooltip-genre")
+                        .attr("x", 18)
+                        .attr("y", -2);
+
+                    focus.append("text")
+                        .attr("x", 18)
+                        .attr("y", 18)
+                        .text("Song:");
+                    
+                    focus.append("text")
+                        .attr("x", 18)
+                        .attr("y", 38)
+                        .text("Artist:");
+
+                    focus.append("text")
+                        .attr("class", "tooltip-song")
+                        .attr("x", 60)
+                        .attr("y", 18);
+
+                    focus.append("text")
+                        .attr("class", "tooltip-performer")
+                        .attr("x", 60)
+                        .attr("y", 38);
+
+                    // todo add slider
+                    // todo add update function https://bl.ocks.org/officeofjane/b3f6a4f89a54fb193265b5c05659e17b
+                });
         </script>
     </body>
 </html>

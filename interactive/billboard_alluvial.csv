@@ -1,0 +1,251 @@
+week_id,week_position,song,performer,instance,previous_week_position,peak_position,weeks_on_chart,spotify_genre
+5/29/2021,14,100.mil',J. Cole & Bas,1,debut,14,1,NA
+5/1/2021,26,34+35,Ariana Grande Feat. Doja Cat & Megan Thee Stallion,1,21,2,25,NA
+5/8/2021,27,34+35,Ariana Grande Feat. Doja Cat & Megan Thee Stallion,1,26,2,26,NA
+5/15/2021,29,34+35,Ariana Grande Feat. Doja Cat & Megan Thee Stallion,1,27,2,27,NA
+5/22/2021,36,34+35,Ariana Grande Feat. Doja Cat & Megan Thee Stallion,1,29,2,28,NA
+5/29/2021,8,95.south,J. Cole,1,debut,8,1,hip hop
+5/1/2021,7,Astronaut In The Ocean,Masked Wolf,1,10,7,10,hip hop
+5/8/2021,8,Astronaut In The Ocean,Masked Wolf,1,7,7,11,hip hop
+5/15/2021,7,Astronaut In The Ocean,Masked Wolf,1,8,7,12,hip hop
+5/22/2021,6,Astronaut In The Ocean,Masked Wolf,1,7,6,13,hip hop
+5/29/2021,11,Astronaut In The Ocean,Masked Wolf,1,6,6,14,hip hop
+5/1/2021,23,Back In Blood,Pooh Shiesty Featuring Lil Durk,1,20,13,16,NA
+5/8/2021,22,Back In Blood,Pooh Shiesty Featuring Lil Durk,1,23,13,17,NA
+5/29/2021,40,Back In Blood,Pooh Shiesty Featuring Lil Durk,1,26,13,20,NA
+5/15/2021,25,Back In Blood,Pooh Shiesty Featuring Lil Durk,1,22,13,18,NA
+5/22/2021,26,Back In Blood,Pooh Shiesty Featuring Lil Durk,1,25,13,19,NA
+5/8/2021,13,Beat Box,SpotemGottem Featuring Pooh Shiesty Or DaBaby,1,14,12,15,NA
+5/15/2021,16,Beat Box,SpotemGottem Featuring Pooh Shiesty Or DaBaby,1,13,12,16,NA
+5/22/2021,15,Beat Box,SpotemGottem Featuring Pooh Shiesty Or DaBaby,1,16,12,17,NA
+5/1/2021,14,Beat Box,SpotemGottem Featuring Pooh Shiesty Or DaBaby,1,12,12,14,NA
+5/29/2021,31,Beat Box,SpotemGottem Featuring Pooh Shiesty Or DaBaby,1,15,12,18,NA
+5/8/2021,18,Beautiful Mistakes,Maroon 5 Featuring Megan Thee Stallion,1,22,18,8,NA
+5/15/2021,19,Beautiful Mistakes,Maroon 5 Featuring Megan Thee Stallion,1,18,18,9,NA
+5/22/2021,18,Beautiful Mistakes,Maroon 5 Featuring Megan Thee Stallion,1,19,18,10,NA
+5/29/2021,26,Beautiful Mistakes,Maroon 5 Featuring Megan Thee Stallion,1,18,18,11,NA
+5/1/2021,22,Beautiful Mistakes,Maroon 5 Featuring Megan Thee Stallion,1,27,22,7,NA
+5/1/2021,15,Best Friend,Saweetie Featuring Doja Cat,1,17,14,15,NA
+5/8/2021,16,Best Friend,Saweetie Featuring Doja Cat,1,15,14,16,NA
+5/15/2021,17,Best Friend,Saweetie Featuring Doja Cat,1,16,14,17,NA
+5/22/2021,19,Best Friend,Saweetie Featuring Doja Cat,1,17,14,18,NA
+5/29/2021,30,Best Friend,Saweetie Featuring Doja Cat,1,19,14,19,NA
+5/1/2021,13,Blinding Lights,The Weeknd,2,11,3,72,r&b
+5/8/2021,11,Blinding Lights,The Weeknd,2,13,3,73,r&b
+5/15/2021,11,Blinding Lights,The Weeknd,2,11,3,74,r&b
+5/22/2021,12,Blinding Lights,The Weeknd,2,11,3,75,r&b
+5/29/2021,23,Blinding Lights,The Weeknd,2,12,3,76,r&b
+5/1/2021,49,Breaking Up Was Easy In The 90's,Sam Hunt,1,67,49,8,country
+5/8/2021,46,Breaking Up Was Easy In The 90's,Sam Hunt,1,49,46,9,country
+5/15/2021,40,Breaking Up Was Easy In The 90's,Sam Hunt,1,46,40,10,country
+5/22/2021,32,Breaking Up Was Easy In The 90's,Sam Hunt,1,40,32,11,country
+5/29/2021,43,Breaking Up Was Easy In The 90's,Sam Hunt,1,32,32,12,country
+5/1/2021,16,Calling My Phone,Lil Tjay Featuring 6LACK,1,13,3,10,NA
+5/8/2021,14,Calling My Phone,Lil Tjay Featuring 6LACK,1,16,3,11,NA
+5/15/2021,13,Calling My Phone,Lil Tjay Featuring 6LACK,1,14,3,12,NA
+5/22/2021,13,Calling My Phone,Lil Tjay Featuring 6LACK,1,13,3,13,NA
+5/29/2021,29,Calling My Phone,Lil Tjay Featuring 6LACK,1,13,3,14,NA
+5/1/2021,29,Dakiti,Bad Bunny & Jhay Cortez,1,34,5,25,NA
+5/8/2021,33,Dakiti,Bad Bunny & Jhay Cortez,1,29,5,26,NA
+5/15/2021,38,Dakiti,Bad Bunny & Jhay Cortez,1,33,5,27,NA
+5/22/2021,43,Dakiti,Bad Bunny & Jhay Cortez,1,38,5,28,NA
+5/1/2021,11,Deja Vu,Olivia Rodrigo,1,15,8,3,pop
+5/8/2021,12,Deja Vu,Olivia Rodrigo,1,11,8,4,pop
+5/22/2021,17,Deja Vu,Olivia Rodrigo,1,15,8,6,pop
+5/15/2021,15,Deja Vu,Olivia Rodrigo,1,12,8,5,pop
+5/29/2021,21,Deja Vu,Olivia Rodrigo,1,17,8,7,pop
+5/1/2021,46,Diamonds Dancing,Young Thug & Gunna Featuring Travis Scott,1,debut,46,1,NA
+5/8/2021,10,Drivers License,Olivia Rodrigo,1,10,1,16,pop
+5/29/2021,24,Drivers License,Olivia Rodrigo,1,16,1,19,pop
+5/1/2021,10,Drivers License,Olivia Rodrigo,1,9,1,15,pop
+5/15/2021,14,Drivers License,Olivia Rodrigo,1,10,1,17,pop
+5/22/2021,16,Drivers License,Olivia Rodrigo,1,14,1,18,pop
+5/15/2021,20,Every Chance I Get,DJ Khaled Featuring Lil Baby & Lil Durk,1,debut,20,1,NA
+5/22/2021,21,Every Chance I Get,DJ Khaled Featuring Lil Baby & Lil Durk,1,20,20,2,NA
+5/29/2021,35,Every Chance I Get,DJ Khaled Featuring Lil Baby & Lil Durk,1,21,20,3,NA
+5/1/2021,40,For The Night,Pop Smoke Featuring Lil Baby & DaBaby,1,36,6,42,NA
+5/8/2021,45,For The Night,Pop Smoke Featuring Lil Baby & DaBaby,1,40,6,43,NA
+5/1/2021,35,Forever After All,Luke Combs,1,44,2,26,country
+5/8/2021,29,Forever After All,Luke Combs,1,35,2,27,country
+5/15/2021,23,Forever After All,Luke Combs,1,29,2,28,country
+5/22/2021,22,Forever After All,Luke Combs,1,23,2,29,country
+5/29/2021,22,Forever After All,Luke Combs,1,22,2,30,country
+5/1/2021,24,Go Crazy,Chris Brown & Young Thug,1,22,3,50,NA
+5/8/2021,25,Go Crazy,Chris Brown & Young Thug,1,24,3,51,NA
+5/15/2021,28,Go Crazy,Chris Brown & Young Thug,1,25,3,52,NA
+5/29/2021,1,Good 4 U,Olivia Rodrigo,1,debut,1,1,pop
+5/15/2021,49,Good Days,SZA,1,44,9,19,rap
+5/1/2021,44,Good Days,SZA,1,39,9,17,rap
+5/8/2021,44,Good Days,SZA,1,44,9,18,rap
+5/8/2021,48,Goosebumps,Travis Scott & HVME,1,47,47,15,NA
+5/15/2021,50,Goosebumps,Travis Scott & HVME,1,48,47,16,NA
+5/1/2021,47,Goosebumps,Travis Scott & HVME,1,50,47,14,NA
+5/22/2021,47,Goosebumps,Travis Scott & HVME,1,50,47,17,NA
+5/1/2021,20,Heartbreak Anniversary,Giveon,1,26,20,10,r&b
+5/8/2021,17,Heartbreak Anniversary,Giveon,1,20,17,11,r&b
+5/22/2021,23,Heartbreak Anniversary,Giveon,1,22,17,13,r&b
+5/29/2021,32,Heartbreak Anniversary,Giveon,1,23,17,14,r&b
+5/15/2021,22,Heartbreak Anniversary,Giveon,1,17,17,12,r&b
+5/1/2021,39,Heat Waves,Glass Animals,2,41,39,14,indie
+5/8/2021,42,Heat Waves,Glass Animals,2,39,39,15,indie
+5/15/2021,34,Heat Waves,Glass Animals,2,42,34,16,indie
+5/22/2021,33,Heat Waves,Glass Animals,2,34,33,17,indie
+5/29/2021,42,Heat Waves,Glass Animals,2,33,33,18,indie
+5/1/2021,41,Hell Of A View,Eric Church,2,58,41,15,country
+5/8/2021,28,Hell Of A View,Eric Church,2,41,28,16,country
+5/15/2021,36,Hell Of A View,Eric Church,2,28,28,17,country
+5/22/2021,30,Hell Of A View,Eric Church,2,36,28,18,country
+5/29/2021,36,Hell Of A View,Eric Church,2,30,28,19,country
+5/15/2021,43,I Did It,"DJ Khaled Featuring Post Malone, Megan Thee Stallion, Lil Baby & DaBaby",1,debut,43,1,NA
+5/1/2021,8,Kiss Me More,Doja Cat Featuring SZA,1,7,7,2,NA
+5/15/2021,5,Kiss Me More,Doja Cat Featuring SZA,1,6,5,4,NA
+5/8/2021,6,Kiss Me More,Doja Cat Featuring SZA,1,8,6,3,NA
+5/29/2021,10,Kiss Me More,Doja Cat Featuring SZA,1,5,5,6,NA
+5/22/2021,5,Kiss Me More,Doja Cat Featuring SZA,1,5,5,5,NA
+5/8/2021,2,Leave The Door Open,Silk Sonic (Bruno Mars & Anderson .Paak),1,2,1,8,NA
+5/1/2021,2,Leave The Door Open,Silk Sonic (Bruno Mars & Anderson .Paak),1,3,1,7,NA
+5/15/2021,2,Leave The Door Open,Silk Sonic (Bruno Mars & Anderson .Paak),1,2,1,9,NA
+5/22/2021,1,Leave The Door Open,Silk Sonic (Bruno Mars & Anderson .Paak),1,2,1,10,NA
+5/29/2021,4,Leave The Door Open,Silk Sonic (Bruno Mars & Anderson .Paak),1,1,1,11,NA
+5/1/2021,5,Levitating,Dua Lipa Featuring DaBaby,1,6,5,29,NA
+5/8/2021,5,Levitating,Dua Lipa Featuring DaBaby,1,5,5,30,NA
+5/15/2021,4,Levitating,Dua Lipa Featuring DaBaby,1,5,4,31,NA
+5/22/2021,2,Levitating,Dua Lipa Featuring DaBaby,1,4,2,32,NA
+5/29/2021,3,Levitating,Dua Lipa Featuring DaBaby,1,2,2,33,NA
+5/1/2021,42,Made For You,Jake Owen,1,43,42,9,country
+5/8/2021,43,Made For You,Jake Owen,1,42,42,10,country
+5/15/2021,32,Made For You,Jake Owen,1,43,32,11,country
+5/22/2021,35,Made For You,Jake Owen,1,32,32,12,country
+5/22/2021,11,Miss The Rage,Trippie Redd & Playboi Carti,1,debut,11,1,NA
+5/29/2021,50,Miss The Rage,Trippie Redd & Playboi Carti,1,11,11,2,NA
+5/1/2021,4,Montero (Call Me By Your Name),Lil Nas X,1,2,1,4,country
+5/15/2021,9,Montero (Call Me By Your Name),Lil Nas X,1,7,1,6,country
+5/29/2021,18,Montero (Call Me By Your Name),Lil Nas X,1,10,1,8,country
+5/22/2021,10,Montero (Call Me By Your Name),Lil Nas X,1,9,1,7,country
+5/8/2021,7,Montero (Call Me By Your Name),Lil Nas X,1,4,1,5,country
+5/1/2021,19,Mood,24kGoldn Featuring iann dior,1,18,1,37,NA
+5/8/2021,20,Mood,24kGoldn Featuring iann dior,1,19,1,38,NA
+5/15/2021,24,Mood,24kGoldn Featuring iann dior,1,20,1,39,NA
+5/22/2021,24,Mood,24kGoldn Featuring iann dior,1,24,1,40,NA
+5/29/2021,37,Mood,24kGoldn Featuring iann dior,1,24,1,41,NA
+5/1/2021,27,My Ex's Best Friend,Machine Gun Kelly X blackbear,2,28,21,36,NA
+5/8/2021,21,My Ex's Best Friend,Machine Gun Kelly X blackbear,2,27,21,37,NA
+5/15/2021,21,My Ex's Best Friend,Machine Gun Kelly X blackbear,2,21,21,38,NA
+5/22/2021,20,My Ex's Best Friend,Machine Gun Kelly X blackbear,2,21,20,39,NA
+5/29/2021,34,My Ex's Best Friend,Machine Gun Kelly X blackbear,2,20,20,40,NA
+5/1/2021,43,No More Parties,Coi Leray Featuring Lil Durk,1,37,26,11,NA
+5/22/2021,48,No More Parties,Coi Leray Featuring Lil Durk,1,51,26,14,NA
+5/8/2021,47,No More Parties,Coi Leray Featuring Lil Durk,1,43,26,12,NA
+5/1/2021,32,On Me,Lil Baby,1,33,23,20,hip hop
+5/8/2021,15,On Me,Lil Baby,1,32,15,21,hip hop
+5/15/2021,18,On Me,Lil Baby,1,15,15,22,hip hop
+5/22/2021,25,On Me,Lil Baby,1,18,15,23,hip hop
+5/29/2021,47,On Me,Lil Baby,1,25,15,24,hip hop
+5/29/2021,6,Peaches,Justin Bieber Featuring Daniel Caesar & Giveon,1,3,1,9,NA
+5/1/2021,3,Peaches,Justin Bieber Featuring Daniel Caesar & Giveon,1,4,1,5,NA
+5/15/2021,3,Peaches,Justin Bieber Featuring Daniel Caesar & Giveon,1,3,1,7,NA
+5/8/2021,3,Peaches,Justin Bieber Featuring Daniel Caesar & Giveon,1,3,1,6,NA
+5/22/2021,3,Peaches,Justin Bieber Featuring Daniel Caesar & Giveon,1,3,1,8,NA
+5/1/2021,33,Positions,Ariana Grande,1,31,1,26,pop
+5/8/2021,34,Positions,Ariana Grande,1,33,1,27,pop
+5/15/2021,37,Positions,Ariana Grande,1,34,1,28,pop
+5/22/2021,37,Positions,Ariana Grande,1,37,1,29,pop
+5/1/2021,1,Rapstar,Polo G,1,1,1,2,rap
+5/8/2021,4,Rapstar,Polo G,1,1,1,3,rap
+5/15/2021,6,Rapstar,Polo G,1,4,1,4,rap
+5/29/2021,15,Rapstar,Polo G,1,7,1,6,rap
+5/22/2021,7,Rapstar,Polo G,1,6,1,5,rap
+5/1/2021,6,Save Your Tears,The Weeknd & Ariana Grande,1,5,4,17,NA
+5/29/2021,9,Save Your Tears,The Weeknd & Ariana Grande,1,4,1,21,NA
+5/8/2021,1,Save Your Tears,The Weeknd & Ariana Grande,1,6,1,18,NA
+5/15/2021,1,Save Your Tears,The Weeknd & Ariana Grande,1,1,1,19,NA
+5/22/2021,4,Save Your Tears,The Weeknd & Ariana Grande,1,1,1,20,NA
+5/29/2021,12,Seeing Green,"Nicki Minaj, Drake & Lil Wayne",1,debut,12,1,NA
+5/22/2021,49,Settling Down,Miranda Lambert,1,56,49,9,country
+5/8/2021,35,Shottas (Lala),Moneybagg Yo,1,debut,35,1,hip hop
+5/1/2021,18,Ski,Young Thug & Gunna,1,debut,18,1,NA
+5/8/2021,38,Ski,Young Thug & Gunna,1,18,18,2,NA
+5/15/2021,48,Ski,Young Thug & Gunna,1,38,18,3,NA
+5/1/2021,12,Solid,Young Thug & Gunna Featuring Drake,1,debut,12,1,NA
+5/8/2021,36,Solid,Young Thug & Gunna Featuring Drake,1,12,12,2,NA
+5/1/2021,50,Somebody Like That,Tenille Arts,1,59,50,14,country
+5/15/2021,30,Sorry Not Sorry,"DJ Khaled Featuring Nas, JAY-Z & James Fauntleroy",1,debut,30,1,NA
+5/1/2021,45,Starting Over,Chris Stapleton,1,42,25,34,country
+5/29/2021,38,Straightenin,Migos,1,debut,38,1,hip hop
+5/8/2021,49,Telepatia,Kali Uchis,1,54,39,10,pop
+5/15/2021,46,Telepatia,Kali Uchis,1,49,39,11,pop
+5/22/2021,40,Telepatia,Kali Uchis,1,46,39,12,pop
+5/29/2021,48,Telepatia,Kali Uchis,1,40,39,13,pop
+5/1/2021,21,The Good Ones,Gabby Barrett,1,19,19,17,country
+5/8/2021,24,The Good Ones,Gabby Barrett,1,21,19,18,country
+5/15/2021,27,The Good Ones,Gabby Barrett,1,24,19,19,country
+5/22/2021,27,The Good Ones,Gabby Barrett,1,27,19,20,country
+5/29/2021,41,The Good Ones,Gabby Barrett,1,27,19,21,country
+5/1/2021,30,Therefore I Am,Billie Eilish,1,24,2,24,pop
+5/8/2021,32,Therefore I Am,Billie Eilish,1,30,2,25,pop
+5/15/2021,33,Therefore I Am,Billie Eilish,1,32,2,26,pop
+5/22/2021,45,Therefore I Am,Billie Eilish,1,33,2,27,pop
+5/8/2021,31,Time Today,Moneybagg Yo,1,53,31,12,hip hop
+5/15/2021,41,Time Today,Moneybagg Yo,1,31,31,13,hip hop
+5/22/2021,41,Time Today,Moneybagg Yo,1,41,31,14,hip hop
+5/1/2021,48,Tombstone,Rod Wave,1,38,11,5,rap
+5/8/2021,50,Tombstone,Rod Wave,1,48,11,6,rap
+5/1/2021,37,Track Star,Mooski,1,35,35,9,NA
+5/8/2021,37,Track Star,Mooski,1,37,35,10,NA
+5/15/2021,31,Track Star,Mooski,1,37,31,11,NA
+5/22/2021,34,Track Star,Mooski,1,31,31,12,NA
+5/29/2021,44,Track Star,Mooski,1,34,31,13,NA
+5/1/2021,9,Up,Cardi B,1,8,1,11,rap
+5/8/2021,9,Up,Cardi B,1,9,1,12,rap
+5/15/2021,12,Up,Cardi B,1,9,1,13,rap
+5/22/2021,14,Up,Cardi B,1,12,1,14,rap
+5/29/2021,27,Up,Cardi B,1,14,1,15,rap
+5/1/2021,36,Wants And Needs,Drake Featuring Lil Baby,1,47,2,7,NA
+5/8/2021,39,Wants And Needs,Drake Featuring Lil Baby,1,36,2,8,NA
+5/15/2021,42,Wants And Needs,Drake Featuring Lil Baby,1,39,2,9,NA
+5/22/2021,38,Wants And Needs,Drake Featuring Lil Baby,1,42,2,10,NA
+5/29/2021,49,Wants And Needs,Drake Featuring Lil Baby,1,38,2,11,NA
+5/1/2021,38,We're Good,Dua Lipa,1,45,38,10,pop
+5/8/2021,41,We're Good,Dua Lipa,1,38,38,11,pop
+5/15/2021,39,We're Good,Dua Lipa,1,41,38,12,pop
+5/22/2021,31,We're Good,Dua Lipa,1,39,31,13,pop
+5/29/2021,46,We're Good,Dua Lipa,1,31,31,14,pop
+5/1/2021,17,What You Know Bout Love,Pop Smoke,2,14,9,33,other
+5/8/2021,19,What You Know Bout Love,Pop Smoke,2,17,9,34,other
+5/15/2021,26,What You Know Bout Love,Pop Smoke,2,19,9,35,other
+5/22/2021,28,What You Know Bout Love,Pop Smoke,2,26,9,36,other
+5/29/2021,45,What You Know Bout Love,Pop Smoke,2,28,9,37,other
+5/1/2021,28,What's Next,Drake,1,25,1,7,hip hop
+5/8/2021,30,What's Next,Drake,1,28,1,8,hip hop
+5/15/2021,45,What's Next,Drake,1,30,1,9,hip hop
+5/15/2021,47,What's Your Country Song,Thomas Rhett,2,55,29,20,country
+5/22/2021,46,What's Your Country Song,Thomas Rhett,2,47,29,21,country
+5/1/2021,31,Without You,The Kid LAROI,1,32,30,20,hip hop
+5/8/2021,23,Without You,The Kid LAROI,1,31,23,21,hip hop
+5/15/2021,8,Without You,The Kid LAROI,1,23,8,22,hip hop
+5/22/2021,9,Without You,The Kid LAROI,1,8,8,23,hip hop
+5/29/2021,16,Without You,The Kid LAROI,1,9,8,24,hip hop
+5/22/2021,42,Wockesha,Moneybagg Yo,1,57,42,3,hip hop
+5/29/2021,39,Wockesha,Moneybagg Yo,1,42,39,4,hip hop
+5/1/2021,25,You Broke Me First.,Tate McRae,1,23,17,35,pop
+5/8/2021,26,You Broke Me First.,Tate McRae,1,25,17,36,pop
+5/15/2021,35,You Broke Me First.,Tate McRae,1,26,17,37,pop
+5/22/2021,39,You Broke Me First.,Tate McRae,1,35,17,38,pop
+5/1/2021,34,You're Mines Still,Yung Bleu Featuring Drake,2,29,18,20,NA
+5/8/2021,40,You're Mines Still,Yung Bleu Featuring Drake,2,34,18,21,NA
+5/15/2021,44,You're Mines Still,Yung Bleu Featuring Drake,2,40,18,22,NA
+5/22/2021,44,You're Mines Still,Yung Bleu Featuring Drake,2,44,18,23,NA
+5/15/2021,10,Your Power,Billie Eilish,1,debut,10,1,pop
+5/22/2021,29,Your Power,Billie Eilish,1,10,10,2,pop
+5/29/2021,5,amari,J. Cole,1,debut,5,1,hip hop
+5/29/2021,13,applying.pressure,J. Cole,1,debut,13,1,hip hop
+5/29/2021,33,close,J. Cole,1,debut,33,1,hip hop
+5/29/2021,28,hunger.on.hillside,J. Cole & Bas,1,debut,28,1,NA
+5/22/2021,8,interlude,J. Cole,1,debut,8,1,hip hop
+5/29/2021,17,interlude,J. Cole,1,8,8,2,hip hop
+5/29/2021,19,let.go.my.hand,"J. Cole, Bas & 6LACK",1,debut,19,1,NA
+5/29/2021,2,my.life,"J. Cole, 21 Savage & Morray",1,debut,2,1,NA
+5/22/2021,50,pov,Ariana Grande,2,55,50,10,pop
+5/29/2021,7,pride.is.the.devil,J. Cole & Lil Baby,1,debut,7,1,NA
+5/29/2021,20,punchin'.the.clock,J. Cole,1,debut,20,1,hip hop
+5/29/2021,25,the.climb.back,J. Cole,1,debut,25,1,hip hop

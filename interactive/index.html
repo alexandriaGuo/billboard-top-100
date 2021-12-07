@@ -12,6 +12,7 @@
 
             .focus circle {
                 fill: black;
+
             }
 
             .focus text {
@@ -31,9 +32,11 @@
     <body>
         <script type="text/javascript">
             // create SVG for our alluvial plot
+            // todo update to use top,bottom,right,left padding
+            // todo add chart title
             var w = 1000
             var h = 800
-            var padding = 20;
+            var padding = 50;
 
             var svg = d3.select("body")
                 .append("svg")
@@ -87,35 +90,40 @@
                                 .tickValues(d3.range(1,51))
 
                     //Create X axis
+                    // todo add x label
                     svg.append("g")
                         .attr("class", "axis")
                         .attr("transform", "translate(0," + (h - padding) + ")")
                         .call(xAxis);
 
                     //Create Y axis
+                    // todo add y label
                     svg.append("g")
                         .attr("class", "axis")
                         .attr("transform", "translate(" + 2*padding + ",0)")
                         .call(yAxis);
 
-
+                    // create line generator for the alluvial
                     var line = d3.line()
                                 .x(function(d) { return xScale(d.week_id); })
                                 .y(function(d) { return yScale(d.week_position); });
 
                     var songNames = Array.from(new Set(dataset.map(x => x.song )));
-                    
-                    // chooose a random month to start with
+
+                    // choose a random month to start with
+                    // todo also grab year
                     var month = dataset[0].week_id.getMonth();
 
                     // draw each song line
-                    for (let i = 0, len = songNames.length, filteredData; i < len; i++) { 
+                    for (let i = 0, len = songNames.length, filteredData; i < len; i++) {
+                        // to do filter on both year and month
                         // javascript months start at 0 (January)
                         filteredData = dataset.filter( x => { return x.week_id.getMonth() == month && x.song == songNames[i]})
                                     .sort(function(a, b) {return a.week_id - b.week_id });
-                        
+
                         // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
                         if (filteredData.length == 1) {
+                            // todo: add interactivity with the circles as well
                             songDots = svg.selectAll(`.circle_${i}`)
                                 .data(filteredData)
                                 .enter()
@@ -135,21 +143,17 @@
                             .attr("fill", "none")
                             .attr("stroke", "#000")
                             .attr('stroke-width', "3px");
-                            
-                            var dateFormatter = d3.timeFormat("%m/%d/%y");
-                            var bisectDate = d3.bisector(function(d) { return d.week_id; }).left;
-                            //var formatValue = d3.format(",")
 
                             var mousemove = function mousemove() {
-                                var x0 = xScale.invert(d3.pointer(event,this).week_id),
-                                    i = bisectDate(filteredData, x0, 1),
-                                    d0 = filteredData[i - 1],
-                                    d1 = filteredData[i],
-                                    d = x0 - d0.week_id > d1.week_id - x0 ? d1 : d0;
-                                focus.attr("transform", "translate(" + xScale(d.week_id) + "," + yScale(d.week_position) + ")");
-                                focus.select(".tooltip-date").text(dateFormatter(d.week_id));
-                                focus.select(".tooltip-song").text(d.song);
-                                focus.attr("width", d3.select(".tooltip-song").node().getComputedTextLength() + 20)
+                                var coords = d3.pointer(event,this)
+                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
+                                focus.select(".tooltip-genre").text(filteredData[0].genre);
+                                focus.select(".tooltip-song").text(filteredData[0].song);
+                                focus.select(".tooltip-performer").text(filteredData[0].performer);
+                                var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
+                                                        focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
+                                // +60 to offset for the song/artist text
+                                focus.select(".tooltip").attr("width", tooltipWidth + 60);
                             };
 
                             songLines.on("mouseover", function (d) {
@@ -157,34 +161,30 @@
                                         .attr("stroke", "#92D1C3")
                                     focus.style("display", null);
                                 })
-                                .on("mouseout", function(d) { 
+                                .on("mouseout", function(d) {
                                     d3.select(this)
                                         .attr("stroke", "#000")
-                                    focus.style("display", "none"); 
+                                    focus.style("display", "none");
                                 })
                                 .on("mousemove", mousemove);
                         }
                     };
-                    
-                    // add focus to where your mouse is pointing
+
+                    // add dummy tooltip in the top right corner, will be updated when we hover over the line
                     var focus = svg.append("g")
                         .attr("class", "focus")
                         .style("display", "none");
 
-                    focus.append("circle")
-                        .attr("r", 5);
-
                     focus.append("rect")
                         .attr("class", "tooltip")
-                        .attr("width", 300)
-                        .attr("height", 50)
+                        .attr("height", 70)
                         .attr("x", 10)
                         .attr("y", -22)
                         .attr("rx", 4)
                         .attr("ry", 4);
 
                     focus.append("text")
-                        .attr("class", "tooltip-date")
+                        .attr("class", "tooltip-genre")
                         .attr("x", 18)
                         .attr("y", -2);
 
@@ -194,9 +194,22 @@
                         .text("Song:");
 
                     focus.append("text")
+                        .attr("x", 18)
+                        .attr("y", 38)
+                        .text("Artist:");
+
+                    focus.append("text")
                         .attr("class", "tooltip-song")
                         .attr("x", 60)
                         .attr("y", 18);
+
+                    focus.append("text")
+                        .attr("class", "tooltip-performer")
+                        .attr("x", 60)
+                        .attr("y", 38);
+
+                    // todo add slider
+                    // todo add update function https://bl.ocks.org/officeofjane/b3f6a4f89a54fb193265b5c05659e17b
                 });
         </script>
     </body>

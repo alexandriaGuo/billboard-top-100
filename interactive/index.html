@@ -101,7 +101,7 @@
             };
 
             // ingest alluvial csv data
-            d3.csv("billboard_alluvial_test.csv", rowConverter)
+            d3.csv("billboard_alluvial_final.csv", rowConverter)
                 .then(function(data) {
                     dataset = data;
 
@@ -149,9 +149,9 @@
                         .attr("y", 38);
 
                     // choose a random month and year to start with
-                    var starterMonth = dataset[201].week_id.getMonth(),
-                        starterYear = dataset[201].week_id.getYear(),
-                        starterDate = dataset[201].week_id;
+                    var starterMonth = dataset[0].week_id.getMonth(),
+                        starterYear = dataset[0].week_id.getYear(),
+                        starterDate = dataset[0].week_id;
 
                     // filter the dataset down to only that month/year
                     var filteredData = dataset.filter( d => { return d.week_id.getMonth() == starterMonth && d.week_id.getYear() == starterYear})

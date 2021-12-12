@@ -76,6 +76,7 @@
         <script type="text/javascript">
             // create SVG for our alluvial plot
             // todo update to use top,bottom,right,left padding
+            
             var w = 1000
             var h = 800
             var padding = 50;
@@ -220,7 +221,7 @@
                         .attr("y", 30)
                         .style("font-size", 14)
                         .style("text-anchor", "left")
-                        .text("An alluvial plot of Top 50 song movement on the chart. Adjust the month/year by moving the slider below.");
+                        .text("An alluvial plot of Top 50 song movement on the chart. Hover for additional song info.");
 
                     // create line generator for the alluvial
                     var line = d3.line()
@@ -337,7 +338,7 @@
                     
                     var slider = svg.append("g")
                                     .attr("class", "date-slider")
-                                    .attr("transform", "translate(" + padding + "," + 800 + ")");
+                                    .attr("transform", "translate(" + padding + "," + h + ")");
 
                     slider.append("line")
                             .attr("class", "track")

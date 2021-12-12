@@ -2,9 +2,16 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Interactive Billboard Top 100 Alluvial plot</title>
+        <title>Interactive Billboard Top 50 Alluvial plot</title>
         <script type="text/javascript" src="https://d3js.org/d3.v6.js"></script>
-		<style type="text/css">
+        <style type="text/css">
+            body {
+                font-family:"avenir next", Arial, sans-serif;
+                font-size: 12px;
+                color: #696969;
+            }
+            /* tooltip styles */
+
             .overlay {
                 fill: none;
                 pointer-events: all;
@@ -12,7 +19,6 @@
 
             .focus circle {
                 fill: black;
-
             }
 
             .focus text {
@@ -24,16 +30,52 @@
                 stroke: #000;
             }
 
-            .tooltip-performer, .tooltip-song {
+            .tooltip-performer, .tooltip-song, .tooltip-genre {
                 font-weight: bold;
             }
+
+            /* slider styles */
+            .ticks {
+                font-size: 10px;
+            }
+
+            .track,
+            .track-inset,
+            .track-overlay {
+                stroke-linecap: round;
+            }
+
+            .track {
+                stroke: #000;
+                stroke-opacity: 0.3;
+                stroke-width: 10px;
+            }
+
+            .track-inset {
+                stroke: #ddd;
+                stroke-width: 8px;
+            }
+
+            .track-overlay {
+                pointer-events: stroke;
+                stroke-width: 50px;
+                stroke: transparent;
+                cursor: crosshair;
+            }
+
+            .handle {
+                fill: #fff;
+                stroke: #000;
+                stroke-opacity: 0.5;
+                stroke-width: 1.25px;
+            }
+
         </style>
     </head>
     <body>
         <script type="text/javascript">
             // create SVG for our alluvial plot
             // todo update to use top,bottom,right,left padding
-            // todo add chart title
             var w = 1000
             var h = 800
             var padding = 50;
@@ -43,8 +85,7 @@
                 .attr("height", h + padding)
                 .attr("width", w + padding);
 
-            // ingest alluvial csv data
-            var datasetTime, xScale, yScale, xAxis, yAxis;  //Empty, for now
+            var xScale, yScale, xAxis, yAxis;  //Empty, for now
 
             var parseDate = d3.timeParse("%m/%d/%Y");
             var formatTime = d3.timeFormat("%b %e");
@@ -55,120 +96,14 @@
                     performer: d.performer,
                     week_id: parseDate(d.week_id),
                     week_position: parseInt(d.week_position),
-                    genre: d.spotify_genre
+                    genre: d.spotify_genre_clean
                 }
             };
 
-            d3.csv("billboard_alluvial.csv", rowConverter)
+            // ingest alluvial csv data
+            d3.csv("billboard_alluvial_test.csv", rowConverter)
                 .then(function(data) {
                     dataset = data;
-                    //Create scale functions
-                    xScale = d3.scaleTime()
-                                .domain([
-                                    d3.min(dataset, function(d) { return d.week_id; }),
-                                    d3.max(dataset, function(d) { return d.week_id; })
-                                ])
-                                .range([2*padding, w - padding]);
-
-                    yScale = d3.scaleLinear()
-                                .domain([
-                                    d3.max(dataset, function(d) { return d.week_position; }),
-                                    d3.min(dataset, function(d) { return d.week_position; })
-                                ])
-                                .range([h - padding, padding]);
-
-                    var dateConverter = d3.timeParse("%a %b %d %Y");
-                    var dates = [...new Set(dataset.map(d=>d.week_id).map((dateObject)=>dateObject.toDateString()))];
-                    //Define X axis
-                    xAxis = d3.axisBottom()
-                                .scale(xScale)
-                                .tickValues(dates.map(d=>dateConverter(d)))
-                                .tickFormat(d3.timeFormat("%b %d"));
-
-                    yAxis = d3.axisLeft()
-                                .scale(yScale)
-                                .tickValues(d3.range(1,51))
-
-                    //Create X axis
-                    // todo add x label
-                    svg.append("g")
-                        .attr("class", "axis")
-                        .attr("transform", "translate(0," + (h - padding) + ")")
-                        .call(xAxis);
-
-                    //Create Y axis
-                    // todo add y label
-                    svg.append("g")
-                        .attr("class", "axis")
-                        .attr("transform", "translate(" + 2*padding + ",0)")
-                        .call(yAxis);
-
-                    // create line generator for the alluvial
-                    var line = d3.line()
-                                .x(function(d) { return xScale(d.week_id); })
-                                .y(function(d) { return yScale(d.week_position); });
-
-                    var songNames = Array.from(new Set(dataset.map(x => x.song )));
-
-                    // choose a random month to start with
-                    // todo also grab year
-                    var month = dataset[0].week_id.getMonth();
-
-                    // draw each song line
-                    for (let i = 0, len = songNames.length, filteredData; i < len; i++) {
-                        // to do filter on both year and month
-                        // javascript months start at 0 (January)
-                        filteredData = dataset.filter( x => { return x.week_id.getMonth() == month && x.song == songNames[i]})
-                                    .sort(function(a, b) {return a.week_id - b.week_id });
-
-                        // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
-                        if (filteredData.length == 1) {
-                            // todo: add interactivity with the circles as well
-                            songDots = svg.selectAll(`.circle_${i}`)
-                                .data(filteredData)
-                                .enter()
-                                .append("circle")
-                                .attr("cx", function(d) {
-                                    return xScale(d.week_id);
-                                })
-                                .attr("cy", function(d) {
-                                    return yScale(d.week_position);
-                                })
-                                .attr("r", 3);
-                        } else {
-                            songLines = svg.append("path")
-                            .datum(filteredData)
-                            .attr("class", "line")
-                            .attr("d", line)
-                            .attr("fill", "none")
-                            .attr("stroke", "#000")
-                            .attr('stroke-width', "3px");
-
-                            var mousemove = function mousemove() {
-                                var coords = d3.pointer(event,this)
-                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
-                                focus.select(".tooltip-genre").text(filteredData[0].genre);
-                                focus.select(".tooltip-song").text(filteredData[0].song);
-                                focus.select(".tooltip-performer").text(filteredData[0].performer);
-                                var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
-                                                        focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
-                                // +60 to offset for the song/artist text
-                                focus.select(".tooltip").attr("width", tooltipWidth + 60);
-                            };
-
-                            songLines.on("mouseover", function (d) {
-                                    d3.select(this)
-                                        .attr("stroke", "#92D1C3")
-                                    focus.style("display", null);
-                                })
-                                .on("mouseout", function(d) {
-                                    d3.select(this)
-                                        .attr("stroke", "#000")
-                                    focus.style("display", "none");
-                                })
-                                .on("mousemove", mousemove);
-                        }
-                    };
 
                     // add dummy tooltip in the top right corner, will be updated when we hover over the line
                     var focus = svg.append("g")
@@ -185,8 +120,13 @@
 
                     focus.append("text")
                         .attr("class", "tooltip-genre")
-                        .attr("x", 18)
+                        .attr("x", 65)
                         .attr("y", -2);
+
+                    focus.append("text")
+                        .attr("x", 18)
+                        .attr("y", -2)
+                        .text("Genre:");
 
                     focus.append("text")
                         .attr("x", 18)
@@ -200,16 +140,357 @@
 
                     focus.append("text")
                         .attr("class", "tooltip-song")
-                        .attr("x", 60)
+                        .attr("x", 65)
                         .attr("y", 18);
 
                     focus.append("text")
                         .attr("class", "tooltip-performer")
-                        .attr("x", 60)
+                        .attr("x", 65)
                         .attr("y", 38);
 
-                    // todo add slider
-                    // todo add update function https://bl.ocks.org/officeofjane/b3f6a4f89a54fb193265b5c05659e17b
+                    // choose a random month and year to start with
+                    var starterMonth = dataset[201].week_id.getMonth(),
+                        starterYear = dataset[201].week_id.getYear(),
+                        starterDate = dataset[201].week_id;
+
+                    // filter the dataset down to only that month/year
+                    var filteredData = dataset.filter( d => { return d.week_id.getMonth() == starterMonth && d.week_id.getYear() == starterYear})
+                                    .sort(function(a, b) {return a.week_id - b.week_id });
+
+                    var songNames = Array.from(new Set(filteredData.map(d => d.song )));
+
+                    var dateConverter = d3.timeParse("%a %b %d %Y");
+                    var dates = [...new Set(filteredData.map(d=>d.week_id).map((dateObject)=>dateObject.toDateString()))];
+
+                    //Create scale functions
+                    xScale = d3.scaleTime()
+                                .domain([
+                                    d3.min(filteredData, function(d) { return d.week_id; }),
+                                    d3.max(filteredData, function(d) { return d.week_id; })
+                                ])
+                                .range([2*padding, w - padding]);
+
+                    yScale = d3.scaleLinear()
+                                .domain([
+                                    d3.max(filteredData, function(d) { return d.week_position; }),
+                                    d3.min(filteredData, function(d) { return d.week_position; })
+                                ])
+                                .range([h - padding, padding]);
+
+                    xAxis = d3.axisBottom()
+                                .scale(xScale)
+                                .tickValues(dates.map(d=>dateConverter(d)))
+                                .tickFormat(d3.timeFormat("%b %d"));
+
+                    yAxis = d3.axisLeft()
+                                .scale(yScale)
+                                .tickValues(d3.range(1,51))
+                    
+                    svg.append("g")
+                        .attr("class", "xaxis")
+                        .attr("transform", "translate(0," + (h - padding) + ")")
+                        .call(xAxis);
+
+                    svg.append("g")
+                        .attr("class", "yaxis")
+                        .attr("transform", "translate(" + 2*padding + ",0)")
+                        .call(yAxis);
+
+                    svg.append("text")
+                        .attr("class", "ylab")
+                        .attr("transform", "rotate(-90)")
+                        .attr("x", -h/2)
+                        .attr("y", padding)
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Billboard Top 50 Rank");
+
+                    svg.append("text")
+                        .attr("class", "title")
+                        .attr("x", padding)
+                        .attr("y", 12)
+                        .style("font-size", 16)
+                        .style("font-weight", 600)
+                        .style("text-anchor", "left")
+                        .text("Interactive Billboard Top 50 Ranking (2011-2021)");
+                    
+                    svg.append("text")
+                        .attr("class", "subtitle")
+                        .attr("x", padding)
+                        .attr("y", 30)
+                        .style("font-size", 14)
+                        .style("text-anchor", "left")
+                        .text("An alluvial plot of Top 50 song movement on the chart. Adjust the month/year by moving the slider below.");
+
+                    // create line generator for the alluvial
+                    var line = d3.line()
+                                .x(function(d) { return xScale(d.week_id); })
+                                .y(function(d) { return yScale(d.week_position); });
+
+                    // draw each song line
+                    for (let i = 0, len = songNames.length; i < len; i++) {
+                        // javascript months start at 0 (January)
+                        var songData = filteredData.filter( d => { return d.song == songNames[i]})
+
+                        var mousemove = function mousemove(e, d) {
+                                var coords = d3.pointer(event,this)
+                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
+                                focus.select(".tooltip-genre").text(e.path[0].__data__[0].genre);
+                                focus.select(".tooltip-song").text(e.path[0].__data__[0].song);
+                                focus.select(".tooltip-performer").text(e.path[0].__data__[0].performer);
+                                var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
+                                                        focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
+                                // +60 to offset for the song/artist text
+                                focus.select(".tooltip").attr("width", tooltipWidth + 60);
+                            };
+                        if (songData.length == 1) {
+                        // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
+                            songDots = svg.selectAll(`#circle_${i}`)
+                                .data(songData)
+                                .enter()
+                                .append("circle")
+                                .attr("class", `song-dot`)
+                                .attr("cx", function(d) {
+                                    return xScale(d.week_id);
+                                })
+                                .attr("cy", function(d) {
+                                    return yScale(d.week_position);
+                                })
+                                .attr("r", 3);
+
+                            songDots.on("mouseover", function (d) {
+                                    d3.selectAll("circle")
+                                        .attr("fill", "lightgrey")
+                                        .attr("fill-opacity", 0.5);
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "lightgrey")
+                                        .attr("stroke-opacity", 0.5);
+                                    d3.select(this)
+                                        .attr("fill", "#92D1C3")
+                                        .attr("fill-opacity", 1);
+                                    focus.style("display", null)
+                                    focus.raise();
+                                })
+                                .on("mouseout", function(d) {
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "#000")
+                                        .attr("stroke-opacity", 1)
+                                        .attr('stroke-width', "3px");
+                                    d3.selectAll("circle")
+                                        .attr("fill", "black")
+                                        .attr("fill-opacity", 1);
+                                    focus.style("display", "none");
+                                })
+                                .on("mousemove", function(event, d) {
+                                    mousemove(event, d)
+                                });
+                        } else {
+                            songLines = svg.append("path")
+                            .datum(songData)
+                            .attr("class", "line")
+                            .attr("d", line)
+                            .attr("fill", "none")
+                            .attr("stroke", "#000")
+                            .attr('stroke-width', "3px");
+
+                            songLines.on("mouseover", function (d) {
+                                d3.selectAll(".line")
+                                    .attr("stroke", "lightgrey")
+                                    .attr("stroke-opacity", 0.5);
+                                d3.selectAll("circle")
+                                    .attr("fill", "lightgrey")
+                                    .attr("fill-opacity", 0.5);
+                                d3.select(this)
+                                    .attr("stroke", "#92D1C3")
+                                    .attr("stroke-opacity", 1)
+                                    .attr('stroke-width', "4.5px");
+                                focus.style("display", null)
+                                focus.raise();
+                            })
+                            .on("mouseout", function(d) {
+                                d3.selectAll(".line")
+                                    .attr("stroke", "#000")
+                                    .attr("stroke-opacity", 1)
+                                    .attr('stroke-width', "3px");
+                                d3.selectAll("circle")
+                                    .attr("fill", "black")
+                                    .attr("fill-opacity", 1);
+                                focus.style("display", "none");
+                            })
+                            .on("mousemove", function(event, d) {
+                                    mousemove(event, d)
+                                });
+                        }
+                    };
+
+                    // add slider
+                    var formatDateIntoYear = d3.timeFormat("%Y");
+                    var formatDate = d3.timeFormat("%b %Y");
+
+                    var startDate = d3.min(dataset, function(d) { return d.week_id; }),
+                        endDate = d3.max(dataset, function(d) { return d.week_id; });
+
+                    var xSlider = d3.scaleTime()
+                        .domain([startDate, endDate])
+                        .range([0, w-padding])
+                        .clamp(true);
+                    
+                    var slider = svg.append("g")
+                                    .attr("class", "date-slider")
+                                    .attr("transform", "translate(" + padding + "," + 800 + ")");
+
+                    slider.append("line")
+                            .attr("class", "track")
+                            .attr("x1", xSlider.range()[0])
+                            .attr("x2", xSlider.range()[1])
+                        .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+                            .attr("class", "track-inset")
+                        .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+                            .attr("class", "track-overlay")
+                            .call(d3.drag()
+                                .on("end", function() { 
+                                    slider.interrupt();
+                                })
+                                .on("drag", function(event) { updateChart(xSlider.invert(event.x)); }));
+
+                    slider.insert("g", ".track-overlay")
+                            .attr("class", "ticks")
+                            .attr("transform", "translate(0," + 18 + ")")
+                        .selectAll("text")
+                            .data(xSlider.ticks(10))
+                            .enter()
+                            .append("text")
+                            .attr("x", xSlider)
+                            .attr("y", 10)
+                            .attr("text-anchor", "middle")
+                            .text(function(d) { return formatDateIntoYear(d); });
+
+                    var label = slider.append("text")
+                        .attr("class", "label")
+                        .attr("text-anchor", "middle")
+                        .text(formatDate(starterDate))
+                        .attr("transform", "translate(0," + (-15) + ")")
+                        .attr("x", xSlider(starterDate));
+
+                    var handle = slider.insert("circle", ".track-overlay")
+                        .attr("class", "handle")
+                        .attr("r", 9)
+                        .attr("cx", xSlider(starterDate));
+                    
+                    function updateChart(d) {
+                        handle.attr("cx", xSlider(d));
+                        label
+                            .attr("x", xSlider(d))
+                            .text(formatDate(d));
+
+                        var date = formatDate(d)
+                        
+                        // refilter date
+                        var newFilteredData = dataset.filter( x => { return x.week_id.getMonth() == d.getMonth() && x.week_id.getYear() == d.getYear()})
+                                    .sort(function(a, b) {return a.week_id - b.week_id });
+                        
+                        var newSongNames = Array.from(new Set(newFilteredData.map(d => d.song )));
+
+                        var newDates = [...new Set(newFilteredData.map(d=>d.week_id).map((dateObject)=>dateObject.toDateString()))];
+
+                        // update axes
+                        xScale.domain([
+                            d3.min(newFilteredData, function(d) { return d.week_id; }),
+                            d3.max(newFilteredData, function(d) { return d.week_id; })
+                        ]);
+
+                        xAxis.tickValues(newDates.map(d=>dateConverter(d)))
+
+                        svg.selectAll("g.xaxis").call(xAxis)
+
+                        svg.selectAll(".song-dot").remove()
+                        svg.selectAll(".line").remove()
+
+                        var newLine = d3.line()
+                                .x(function(d) { return xScale(d.week_id); })
+                                .y(function(d) { return yScale(d.week_position); });
+
+                        for (let i = 0, len = newSongNames.length; i < len; i++) {
+                            var newSongData = newFilteredData.filter( d => { return d.song == newSongNames[i]})
+                            // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
+                            if (newSongData.length == 1) {
+                        
+                                newSongDots = svg.selectAll(`#circle_${i}`)
+                                    .data(newSongData)
+                                    .enter()
+                                    .append("circle")
+                                    .attr("class", `song-dot`)
+                                    .attr("cx", function(d) {
+                                        return xScale(d.week_id);
+                                    })
+                                    .attr("cy", function(d) {
+                                        return yScale(d.week_position);
+                                    })
+                                    .attr("r", 3);
+
+                                newSongDots.on("mouseover", function (d) {
+                                    d3.selectAll("circle")
+                                        .attr("fill", "lightgrey")
+                                        .attr("fill-opacity", 0.5);
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "lightgrey")
+                                        .attr("stroke-opacity", 0.5);
+                                    d3.select(this)
+                                        .attr("fill", "#92D1C3")
+                                        .attr("fill-opacity", 1);
+                                    focus.style("display", null)
+                                    focus.raise();
+                                })
+                                .on("mouseout", function(d) {
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "#000")
+                                        .attr("stroke-opacity", 1)
+                                        .attr('stroke-width', "3px");
+                                    d3.selectAll("circle")
+                                        .attr("fill", "black")
+                                        .attr("fill-opacity", 1);
+                                    focus.style("display", "none");
+                                })
+                                .on("mousemove", d => function(d) {
+                                    mousemove(d)
+                                });
+                            } else {
+                                newSongLines = svg.append("path")
+                                    .datum(newSongData)
+                                    .attr("class", "line")
+                                    .attr("d", newLine)
+                                    .attr("fill", "none")
+                                    .attr("stroke", "#000")
+                                    .attr('stroke-width', "3px");
+
+                                newSongLines.on("mouseover", function (d) {
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "lightgrey")
+                                        .attr("stroke-opacity", 0.5);
+                                    d3.selectAll("circle")
+                                        .attr("fill", "lightgrey")
+                                        .attr("fill-opacity", 0.5);
+                                    d3.select(this)
+                                        .attr("stroke", "#92D1C3")
+                                        .attr("stroke-opacity", 1)
+                                        .attr('stroke-width', "4.5px");
+                                    focus.style("display", null)
+                                    focus.raise();
+                                }).on("mouseout", function(d) {
+                                    d3.selectAll(".line")
+                                        .attr("stroke", "#000")
+                                        .attr("stroke-opacity", 1)
+                                        .attr('stroke-width', "3px");
+                                    d3.selectAll("circle")
+                                        .attr("fill", "black")
+                                        .attr("fill-opacity", 1);
+                                    focus.style("display", "none");
+                                }).on("mousemove", function(event, d) {
+                                    mousemove(event, d)
+                                });
+                            }
+                        };
+                    }
                 });
         </script>
     </body>

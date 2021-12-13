@@ -1,7 +1,14 @@
+tab:unnamed-chunk-4
 introduction
+graph-to-dos-and-also-delete-me-pls
+code-to-dos
+writing-to-dos
 data-sources
 data-transformation
 missing-values
 results
+what-features-define-song-popularity-through-the-decades
+what-artists-and-songs-have-trended-since-2000
+what-defines-a-genre-and-what-makes-k-pop-so-unique
 interactive-component
 conclusion

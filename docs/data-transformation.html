@@ -24,7 +24,7 @@
 <meta name="author" content="Alexandria Guo, Julia Wang, Kevia Qu" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -73,11 +73,21 @@
 <li><a href="./">billboard100</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#graph-to-dos-and-also-delete-me-pls"><i class="fa fa-check"></i><b>1.1</b> Graph TO DOs and also DELETE ME PLS</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#code-to-dos"><i class="fa fa-check"></i><b>1.2</b> Code To Dos:</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#writing-to-dos"><i class="fa fa-check"></i><b>1.3</b> Writing To dos</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#what-features-define-song-popularity-through-the-decades"><i class="fa fa-check"></i><b>5.1</b> What features define song popularity through the decades?</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#what-artists-and-songs-have-trended-since-2000"><i class="fa fa-check"></i><b>5.2</b> What artists and songs have trended since 2000?</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#what-defines-a-genre-and-what-makes-k-pop-so-unique"><i class="fa fa-check"></i><b>5.3</b> What defines a genre and what makes k-pop so unique?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -101,6 +111,11 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<p>Our data was provided as two separate csv’s, one for the Billboard Top 100 rankings, and the other for the Spotify audio features. The kind folks at TidyTuesday already created a song_id column in both csv’s, which was the concatenation of the song name and the artist. We found that using Python to do our data merging and transformation to be the most seamless. The Jupyter Notebook with our code can be found <a href="https://github.com/alexandriaGuo/billboard-top-100/blob/main/data_clean.ipynb">here</a>.</p>
+<p>To transform the Billboard data, we noticed that there were only NAs in the previous week position column, and that it corresponded to when the song first appeared on the charts. Instead of keeping them as nulls, to be slightly more descriptive, we null-filled those instances with “debut”.</p>
+<p>To merge the two datasets, I left-joined on the Billboard dataset, in order to maintain all of our Billboard data. During the initial join, we noticed the data was growing in size, which was due to the duplicate song instances in the Spotify dataset. The data was de-duplicated based on the song_id. Another thing to note is that we did not separate out artists that were featured on a song or if there were multiple artists listed on a song. We treated each combination of artists as a unique artist. Another issue with featured artists is that often the Spotify data for that song would be missing. We believe that it is due to Spotify listing the song/artist in a different way than Billboard, and because we are joining on Artist and Song as our id, this could have caused issues with looking up Spotify data. As a result the Spotify data (genre, musicality features, etc.) for many songs with features is missing.</p>
+<p>After merging, we noticed that the Spotify genre feature was actually a list of genres that Spotify associated with the song. Additionally, there were hundreds of unique genres since Spotify is very detailed in their description of pop (dance pop, post-teen pop, space age pop, brill building pop, pop rap to name a few). To deal with this, we decided on distilling the list to a single representative genre. We went through the list of genres, and matched on a common list of genres such as rap, country, pop, k-pop, jazz, and more. If the song did not have any of those genres, it was assigned other. Additionally, since many songs had pop as a genre, we decided to match on any of the other genres first, before resorting to pop. As a result, this might deflate the number of songs labeled as pop. Ideally, we would have been able to count all of the instances of each genre, and could be a worthwhile future improvement.</p>
+<p>To make our plots generally more readable, we decided to filter down our dataset to songs after the 2000s, as they are more recent and relevant. The exceptions are the plots that focus on a meta-analysis by each decade, as well as for our interactive plot; in order to make the dataset a manageable size to be shared online, we decided to only use songs between 2011-2021.</p>
 
 </div>
             </section>

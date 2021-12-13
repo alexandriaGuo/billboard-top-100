@@ -1,17 +1,20 @@
 # Results
 
 ```{r, echo=FALSE}
-data <- readr::read_csv("billboard_spotify_cleaned_.csv")
+data <- readr::read_csv("billboard_spotify_cleaned_final.csv")
 ```
 
-##What features define song popularity through the decades?
-```{r, echo = FALSE}
+## What features define song popularity through the decades?
+```{r song feat by decade, echo = FALSE}
+
+song_features <- c("danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", "valence")
+
 top_5<- data %>% 
           filter(peak_position <= 5) %>%
           mutate(date = as.Date(week_id,  "%m/%d/%Y"),
                  song_id = paste(song, performer, sep="_"),
                  year = year(date),
-                 decade = paste(as.character(floor(year/10) *10),"'s", sep="")) %>%
+                 Decade = paste(as.character(floor(year/10) *10),"'s", sep="")) %>%
           filter(year >= 1960) %>%
           group_by(song_id, instance) %>%   #including instance: A song will show up mult time/year
           mutate(abs_peak_position = min(peak_position),
@@ -20,46 +23,55 @@ top_5<- data %>%
           ungroup()
 
 top_5 %>% 
-  select(song_id, song_features, decade) %>% 
+  select(song_id, song_features, Decade) %>% 
   mutate(loudness = loudness/-60 ) %>%
   pivot_longer(song_features, values_to = 'values', names_to='features', values_drop_na = TRUE) %>%
   ggplot(aes(x=values, y = features, fill = features)) +
   geom_density_ridges(alpha = 0.5) +
   scale_fill_cyclical(name = "Cycle", values = c("lightblue", "blue"))+
   scale_color_cyclical(name = "Cycle", values = c("lightblue", "blue")) +
-  ggtitle("Top 5 Songs' features") + xlab('Value') + ylab('Song Features') + facet_wrap(~decade)
+  facet_wrap(~Decade) +
+  ggtitle("Top 5 Songs' features") + xlab('Value') + ylab('Song Features') +
+  theme(plot.title = element_text(size = 14, hjust=0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 11),
+        strip.text.x = element_text(size = 12))
 
 
 ```
 
-Some skew toward higher valence (more positive), low speechiness (presence of words). Values above 0.66 describes tracks that are mostly spoken words. 0.33-0.66 represents tracks with music and speech (like rap). loudness correlates to physical strength, scaled to the range between -60 to 0 db. Liveness greater than 0.8 indicates a strong likelihood that song is live. Instrumentalness (closer to 1 = more likely no vocals). 
+Songs that reached a peak position in the top 5 were pulled from the charts and their song features were plotted. Faceting the data by decade (the 1950s were omitted since it was an incomplete decade, however the 2020s were kept since it is more recent and relevant), there are notably similar distributions in the song features regardless of the decade. One of the features that does see a shift in its distribution is valence; while it skews more positive in the 60’s - 80’s, there is a shift left from the 90’s to the 2010’s. There is also a change in how danceable a song is; while there is a larger spread in the 1970s, there is a noticeable shift of popular songs skewing toward more danceable from the 2000’s onwards.  
 
-```{r, echo = FALSE, fig.height = 7, fig.width = 12}
-par_cord_kq <-top_5 %>%
-            filter(abs_peak_position == 1, (decade == "1960's"| decade =="2010's")) %>%
+```{r parcoord by decade, fig.width = 12, fig.height = 7, echo = FALSE}
+
+par_cord <-top_5 %>%
+            filter(abs_peak_position == 1, (Decade == "1960's"| Decade =="2010's")) %>%
             mutate(loudness = loudness/-60) %>%
-            select(decade, mode, song_features)
+            select(Decade, mode, song_features)
 
 
-ggparcoord(data = par_cord_kq, columns = 2:10, 
+ggparcoord(data = par_cord, columns = 2:10, 
            scale = 'uniminmax', 
-           groupColumn = 'decade',
-           alphaLines = 1, splineFactor = 7,
-           title = "Features of Songs that Peaked at the No.1 on Charts") +
-  xlab('Song Feature')
+           groupColumn = 'Decade',
+           alphaLines = 1, splineFactor = 7) + 
+  ggtitle('Features of Songs that Peaked at the No.1 Position on Billboard Charts')  +
+  xlab('Song Feature') +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
 
 
 
 ```
+Surprisingly, there are many similarities between the trends of popular songs in the 1960s vs the 2020s. There is generally a positive correlation between danceability and energy in both decades. Notably, the main changes are seen in speechiness; there is an opposite correlation between speechiness and loudness or speechiness and accousticness in the 2010’s compared to the 1960’s.
 
 
-
-
-```{r, echo = FALSE, fig.height = 15, fig.width=15}
+```{r genre by decade, fig.height = 13, fig.width = 12, echo = FALSE}
 genre_5 <- top_5 %>%
             subset(spotify_genre_clean != 'NA') %>%
-            rename(Genre = spotify_genre_clean,
-                   Decade = decade)
+            rename(Genre = spotify_genre_clean)
 genre_names <- distinct(genre_5, Genre)[1]
 num_colors <- count(genre_names)
 fills18 <- colorRampPalette(brewer.pal(num_colors, 'Spectral'))
@@ -72,14 +84,16 @@ mosaic(Genre ~ Decade,
        highlighting_fill = fills18,
        data = genre_5,
        labeling= labeling_border(rot_labels = c(0,0,0,0)),
-       spacing = vcd::spacing_equal(sp = unit(0, "lines")))
-
+       spacing = vcd::spacing_equal(sp = unit(0, "lines")),
+       gp_varnames = gpar(fontsize = 14, fontface = 1),
+       gp_labels = gpar(fontsize = 12),
+       main = 'Top 5 Songs by Genre Across the Decades')
 
 ```
-Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm, k-pop, hip-hop and rap didn't even exist in earlier decades, and did not show any popularity until the last 10-20 years.
+Again, data from the 1950s was omitted since it was an incomplete decade (though data from the 2020s was kept since it is more recent and relevant). Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. 
 
 
-##What artists and songs have trended since 2000?
+## What artists and songs have trended since 2000?
 ```{r data cleaning}
 
 data_2000 <- data %>%
@@ -89,7 +103,7 @@ data_2000 <- data %>%
 data_filtered <- data_2000[,1:9]
 ```
 
-```{r top 50 songs by # of weeks on charts}
+```{r top 50 songs by num weeks on charts}
 top_song <- data_filtered %>% 
   group_by(song, performer) %>% 
   slice(which.max(weeks_on_chart)) %>% 
@@ -98,7 +112,13 @@ top_song <- data_filtered %>%
 
 
 ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre)) +
-  geom_point()
+  geom_point() + 
+  ggtitle('Top 50 with Most weeks on Charts') + xlab('') + ylab('') +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
 
 
 ```
@@ -106,7 +126,7 @@ ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), colo
 Insight:
 
 
-```{r top song by # of weeks at #1}
+```{r top song by Num of weeks at No1}
 top_song_1 <- data_filtered %>% 
   group_by(song) %>% 
   filter(week_position == 1) %>% 
@@ -116,7 +136,14 @@ top_song_1 <- data_filtered %>%
   head(50)
 
 ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
-  geom_point()
+  geom_point() + 
+  ggtitle('Top Songs with Most Weeks at No.1') + xlab('Number of Weeks') + ylab('Song Title') +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
+
 
 
 ```
@@ -124,7 +151,7 @@ ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
 Insight:
 
 
-```{r top artists by number of songs on chart}
+```{r top artists by num songs on chart}
 top_artists <- data_filtered %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
@@ -134,13 +161,21 @@ top_artists <- data_filtered %>%
   head(50)
 
 ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
-  geom_point()
+  geom_point() +
+  ggtitle('Artists with the Most Songs in Top 100') + xlab('Number of Songs') + 
+  ylab('Artist') +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
+
 ```
 
 Insight:
 
 
-```{r top artists by number of #1 songs on chart}
+```{r top artists by No1 songs on chart}
 top_artists_1 <- data_filtered %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 
@@ -151,12 +186,19 @@ top_artists_1 <- data_filtered %>%
   head(35)
 
 ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
-  geom_point()
+  geom_point() +
+  ggtitle('Artists with Most Songs at No.1') + xlab('Number of Songs') + ylab('Artist') +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14))
+
 ```
 
 Insight:
 
-##What defines a genre and what makes k-pop so unique?
+## What defines a genre and what makes k-pop so unique?
 
 ```{r AG Uniq songs}
 rawdata <- readr::read_csv("billboard_spotify_cleaned_kpop.csv")
@@ -218,12 +260,15 @@ cbind(first, last[,-1]) %>%
   scale_y_continuous(limits = c(0, 800)) +
   labs(x="Year", y="Frequency",
        title="Number of unique songs in the Top 100")  +
-  theme_gray()
+  theme_gray() + theme(plot.title = element_text(size = 14, hjust=0.5))
 # FIX FCT_REORDER TO MATCH FIGURE
 # add annotated lines of best fit
 ```
 
-Insight:
+A perennial sentiment throughout the generations—in the United States, at least—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
+
+  We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2007 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
+
 
 ```{r AG Biplot of auditory features}
 fulldata <- na.omit(uniqdata)
@@ -299,7 +344,12 @@ temp %>%
   theme_gray()
 ```
 
-Insight:
+  K-pop has been making a splash internationally in recent years, charting on the U.S. Billboard 100 for the first time in 2009 with “Nobody” by the Wonder Girls, and BTS maintaining a consistent presence since 2017. To some critics though, the genre is defined by its industry of boy/girl-group creation and performance components more than its unique sound, further compounded by the work of Western producers in its field.
+	
+	Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
+	
+	The k-pop songs are all found on the left half of the plot, with the exception of “Blue & Grey” by BTS. This marks k-pop hits in the U.S. as generally higher in tempo, liveness, loudness, and energy than the general American pop population. Despite a hallmark of the genre being dance accompaniments to every song, none of them falls particularly high along the danceability axis—however, this may be due to many of these songs also being high in tempo and bucking the general anticorrelation trend. With consideration to “Blue & Grey” as an outlier, it is an interesting example of how regionally-defined genres can be limiting. Within k-pop, in addition to dance anthems, slower and more stripped-down ballads are also another popular (if slightly less common) form of release, usually highlighting the vocal talents of specific group members. In this regard, “Blue & Grey” is unmistakably “k-pop,” but also deserving of a more accurate label that better captures the actual aural qualities of the song.
+
 
 ```{r AG parcoords kpop}
 # REQUIRES MOST TWEAKING
@@ -313,4 +363,6 @@ fulldata %>%
   theme(legend.position = "none") 
 ```
 
-Insight:
+  To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.
+  
+  Within this reduced dataset, we see more clearly many of the same relationships between audio features as first observed in the previous biplot. Additionally, we can observe the clustering of songs towards the minimums of speechiness and liveness, hence their smaller rotation vectors and reduced power in explaining variance. The k-pop hits maintain similar patterns across the parallel coordinates plot, with the most variance in danceability. K-pop is also slightly over-represented in the upper ends of speechiness, which corresponds to the commonality of a “rap section” in many k-pop songs, due to how their groups are structured.

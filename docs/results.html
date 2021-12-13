@@ -24,7 +24,7 @@
 <meta name="author" content="Alexandria Guo, Julia Wang, Kevia Qu" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -73,11 +73,21 @@
 <li><a href="./">billboard100</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#graph-to-dos-and-also-delete-me-pls"><i class="fa fa-check"></i><b>1.1</b> Graph TO DOs and also DELETE ME PLS</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#code-to-dos"><i class="fa fa-check"></i><b>1.2</b> Code To Dos:</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#writing-to-dos"><i class="fa fa-check"></i><b>1.3</b> Writing To dos</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#what-features-define-song-popularity-through-the-decades"><i class="fa fa-check"></i><b>5.1</b> What features define song popularity through the decades?</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#what-artists-and-songs-have-trended-since-2000"><i class="fa fa-check"></i><b>5.2</b> What artists and songs have trended since 2000?</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#what-defines-a-genre-and-what-makes-k-pop-so-unique"><i class="fa fa-check"></i><b>5.3</b> What defines a genre and what makes k-pop so unique?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -101,7 +111,50 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<div id="what-features-define-song-popularity-through-the-decades" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> What features define song popularity through the decades?</h2>
+<p><img src="finalproj_files/figure-html/song%20feat%20by%20decade-1.png" width="672" /></p>
+<p>Songs that reached a peak position in the top 5 were pulled from the charts and their song features were plotted. Faceting the data by decade (the 1950s were omitted since it was an incomplete decade, however the 2020s were kept since it is more recent and relevant), there are notably similar distributions in the song features regardless of the decade. One of the features that does see a shift in its distribution is valence; while it skews more positive in the 60’s - 80’s, there is a shift left from the 90’s to the 2010’s. There is also a change in how danceable a song is; while there is a larger spread in the 1970s, there is a noticeable shift of popular songs skewing toward more danceable from the 2000’s onwards.</p>
+<p><img src="finalproj_files/figure-html/parcoord%20by%20decade-1.png" width="1152" />
+Surprisingly, there are many similarities between the trends of popular songs in the 1960s vs the 2020s. There is generally a positive correlation between danceability and energy in both decades. Notably, the main changes are seen in speechiness; there is an opposite correlation between speechiness and loudness or speechiness and accousticness in the 2010’s compared to the 1960’s.</p>
+<p><img src="finalproj_files/figure-html/genre%20by%20decade-1.png" width="1152" />
+Again, data from the 1950s was omitted since it was an incomplete decade (though data from the 2020s was kept since it is more recent and relevant). Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it’s evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn’t even exist in earlier decades, and did not show any popularity until the last 10 years.</p>
+</div>
+<div id="what-artists-and-songs-have-trended-since-2000" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> What artists and songs have trended since 2000?</h2>
+<p><img src="finalproj_files/figure-html/top%2050%20songs%20by%20num%20weeks%20on%20charts-1.png" width="672" /></p>
+<p>Insight:</p>
+<p><img src="finalproj_files/figure-html/top%20song%20by%20Num%20of%20weeks%20at%20No1-1.png" width="672" /></p>
+<p>Insight:</p>
+<p><img src="finalproj_files/figure-html/top%20artists%20by%20num%20songs%20on%20chart-1.png" width="672" /></p>
+<p>Insight:</p>
+<p><img src="finalproj_files/figure-html/top%20artists%20by%20No1%20songs%20on%20chart-1.png" width="672" /></p>
+<p>Insight:</p>
+</div>
+<div id="what-defines-a-genre-and-what-makes-k-pop-so-unique" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> What defines a genre and what makes k-pop so unique?</h2>
+<p><img src="finalproj_files/figure-html/AG%20Uniq%20songs-1.png" width="672" /></p>
+<p>A perennial sentiment throughout the generations—in the United States, at least—is that the pop music of today is less lyrically complex <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, less auditorily diverse <a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.</p>
+<p>We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 <a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>, where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2007 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.</p>
+<p><img src="finalproj_files/figure-html/AG%20Biplot%20of%20auditory%20features-1.png" width="672" /><img src="finalproj_files/figure-html/AG%20Biplot%20of%20auditory%20features-2.png" width="672" /><img src="finalproj_files/figure-html/AG%20Biplot%20of%20auditory%20features-3.png" width="672" /></p>
+<p>K-pop has been making a splash internationally in recent years, charting on the U.S. Billboard 100 for the first time in 2009 with “Nobody” by the Wonder Girls, and BTS maintaining a consistent presence since 2017. To some critics though, the genre is defined by its industry of boy/girl-group creation and performance components more than its unique sound, further compounded by the work of Western producers in its field.</p>
+<pre><code>Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
 
+The k-pop songs are all found on the left half of the plot, with the exception of “Blue &amp; Grey” by BTS. This marks k-pop hits in the U.S. as generally higher in tempo, liveness, loudness, and energy than the general American pop population. Despite a hallmark of the genre being dance accompaniments to every song, none of them falls particularly high along the danceability axis—however, this may be due to many of these songs also being high in tempo and bucking the general anticorrelation trend. With consideration to “Blue &amp; Grey” as an outlier, it is an interesting example of how regionally-defined genres can be limiting. Within k-pop, in addition to dance anthems, slower and more stripped-down ballads are also another popular (if slightly less common) form of release, usually highlighting the vocal talents of specific group members. In this regard, “Blue &amp; Grey” is unmistakably “k-pop,” but also deserving of a more accurate label that better captures the actual aural qualities of the song.</code></pre>
+<p><img src="finalproj_files/figure-html/AG%20parcoords%20kpop-1.png" width="672" /></p>
+<p>To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.</p>
+<p>Within this reduced dataset, we see more clearly many of the same relationships between audio features as first observed in the previous biplot. Additionally, we can observe the clustering of songs towards the minimums of speechiness and liveness, hence their smaller rotation vectors and reduced power in explaining variance. The k-pop hits maintain similar patterns across the parallel coordinates plot, with the most variance in danceability. K-pop is also slightly over-represented in the upper ends of speechiness, which corresponds to the commonality of a “rap section” in many k-pop songs, due to how their groups are structured.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p><a href="https://pudding.cool/projects/vocabulary/index.html" class="uri">https://pudding.cool/projects/vocabulary/index.html</a><a href="results.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://pudding.cool/2017/05/song-repetition/" class="uri">https://pudding.cool/2017/05/song-repetition/</a><a href="results.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://pudding.cool/2018/05/similarity/" class="uri">https://pudding.cool/2018/05/similarity/</a><a href="results.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer" class="uri">https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer</a><a href="results.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

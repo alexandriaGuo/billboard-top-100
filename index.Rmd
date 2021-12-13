@@ -7,7 +7,7 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-##Graph TO DOs and also DELETE ME PLS
+## Graph TO DOs and also DELETE ME PLS
 Check all plots for title, axis labels, UoM, reasonable axis limits, fontsize, label rotation
 plot annotations/subheadings/call-outs (parcoord)
 
@@ -18,8 +18,14 @@ Apply Theme to all (grey 14)
 
 ## Code To Dos:
 Check all libraries are in _common file
-##Writing To dos
+
+## Writing To dos
 
 Write analyses/insights for each plot: google docs for copy + pasta
 
 Finish Conclusions (compile on google docs 1st)
+
+
+  Billboard is an American music and entertainment magazine that originated the “Hot 100” chart, which records the one hundred popular songs in the United States (based on sales, radio, and more recently, online streaming) on a weekly basis. Since the chart’s inception in 1958, the “Billboard Hot 100” chart has offered a snapshot of American musical preferences throughout the decades. While Billboard offers a popularity-based view of music, Spotify, a popular music-streaming platform, has developed a database of song characteristics that provide a multi-dimensional description of the songs available in its catalog. Some example song features include "danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", and "valence".
+  
+  Music has always captured the zeitgeist of its time, and using these two data sets, we are interested in exploring various aspects of musical popularity. In particular, there are 3 main questions we aim to answer. First, what musical qualities define a popular song and how have these changed over the decades? The combination of chart data and song features can give us insight into listeners’ preferences. Also, focusing on more recent music since the 2000s, how have the most popular songs and artists trended? While a few artists and songs seem to dominate recent memory, what do the popular songs we’ve grown up with look like? Finally, are there particular song characteristics that seem to define specific genres; in particular, what makes k-pop unique? While k-pop has seemingly risen to sudden prominence in the last few years, are there particular features of this genre that provide insight into its viral nature? Using these three themes, we aim to take a deeper look into the most popular music in the US. 

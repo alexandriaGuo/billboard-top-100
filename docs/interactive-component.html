@@ -24,7 +24,7 @@
 <meta name="author" content="Alexandria Guo, Julia Wang, Kevia Qu" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -73,11 +73,21 @@
 <li><a href="./">billboard100</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#graph-to-dos-and-also-delete-me-pls"><i class="fa fa-check"></i><b>1.1</b> Graph TO DOs and also DELETE ME PLS</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#code-to-dos"><i class="fa fa-check"></i><b>1.2</b> Code To Dos:</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#writing-to-dos"><i class="fa fa-check"></i><b>1.3</b> Writing To dos</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#what-features-define-song-popularity-through-the-decades"><i class="fa fa-check"></i><b>5.1</b> What features define song popularity through the decades?</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#what-artists-and-songs-have-trended-since-2000"><i class="fa fa-check"></i><b>5.2</b> What artists and songs have trended since 2000?</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#what-defines-a-genre-and-what-makes-k-pop-so-unique"><i class="fa fa-check"></i><b>5.3</b> What defines a genre and what makes k-pop so unique?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -101,6 +111,14 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Interactive component</h1>
+<iframe src="interactive/index.html" width="800" height="480">
+</iframe>
+<p>You can also access the plot on VizHub:
+<a href="https://vizhub.com/jw4169/20ca79535ad2415383c09787459a5d22?edit=files&amp;file=index.html" class="uri">https://vizhub.com/jw4169/20ca79535ad2415383c09787459a5d22?edit=files&amp;file=index.html</a></p>
+<p>One thing that we discovered from our interactive plot was that many songs seem to enter the chart at the same time. The top songs often stay pretty horizontal across the month, which shows that very popular songs remain at the top for a while.
+We know the tooltips can get cut off on the right side if the song name or artist are too long. However, we ran out of time to update everything to use a right margin, and there is an easy workaround by just hovering over the line to the left of the graph.
+There are a couple instances where songs with the name made it on charts separately under different artists. As a result, there is a bit of wonkiness where you can see a vertical line between data points for It’s Beginning to Look a Lot Like Christmas in Dec 2020, because the song charted both with Michael Buble as well as with Perry Como And The Fontane Sisters With Mitchell Ayres And His Orchestra, so I think we might have had issues with our data merging here.</p>
+<p>Credit: Jane Pong’s <a href="https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763" class="uri">https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763</a> for the date slider framework and Yong Lee’s <a href="https://bl.ocks.org/Qizly/8f6ba236b79d9bb03a80" class="uri">https://bl.ocks.org/Qizly/8f6ba236b79d9bb03a80</a> for the tooltip format.</p>
 
 </div>
             </section>

@@ -20,13 +20,9 @@ library(vcd)
 library(RColorBrewer)
 ```
 
-## Question: What are the musical qualities that define a popular song
-## What features define popular songs
-#Have the distribution of these features changed over time?
-#clusters?
 
 ```{r, echo=FALSE}
-df_kq <- readr::read_csv("billboard_spotify_cleaned.csv")
+df_kq <- readr::read_csv("billboard_spotify_cleaned_.csv")
 ```
 
 ```{r}
@@ -36,7 +32,7 @@ top_5<- df_kq %>%
           mutate(date = as.Date(week_id,  "%m/%d/%Y"),
                  song_id = paste(song, performer, sep="_"),
                  year = year(date),
-                 decade = paste(as.character(floor(year/10) *10),"'s", sep="")) %>%
+                 Decade = paste(as.character(floor(year/10) *10),"'s", sep="")) %>%
           filter(year >= 1960) %>%
           group_by(song_id, instance) %>%   #include instance? A song will show up 1 time/year
           mutate(abs_peak_position = min(peak_position),
@@ -61,7 +57,7 @@ other_features <-c("max_weeks_on_chart", "key", "mode", "tempo")
 
 ```
 
-#Distribution of features for songs that made the top_5
+Distribution of features for songs that made the top_5
 ```{r, fig.width = 15}
 top_5 %>% 
   select(song_id, song_features, decade) %>% 
@@ -71,7 +67,11 @@ top_5 %>%
   geom_density_ridges(alpha = 0.5) +
   scale_fill_cyclical(name = "Cycle", values = c("lightblue", "blue"))+
   scale_color_cyclical(name = "Cycle", values = c("lightblue", "blue")) +
-  ggtitle("Top 5 Songs' features") + xlab('Value') + ylab('Song Features') + facet_wrap(~decade)
+  ggtitle("Top 5 Songs' features") + xlab('Value') + ylab('Song Features') + facet_wrap(~Decade) +
+  theme(plot.title = element_text(size = 18, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        strip.text.x = element_text(size = 14))
 
 
 
@@ -80,20 +80,25 @@ top_5 %>%
 Some skew toward higher valence (more positive), low speechiness (presence of words). Values above 0.66 describes tracks that are mostly spoken words. 0.33-0.66 represents tracks with music and speech (like rap). loudness correlates to physical strength, scaled to the range between -60 to 0 db. Liveness > 0.8 strong likelihood that song is live. Instrumentalness (closer to 1 = more likely no vocals). 
 
 
-#
+
 ```{r, fig.height = 7, fig.width = 12}
-par_cord_kq <-top_5 %>%
-            filter(abs_peak_position == 1, (decade == "1960's"| decade =="2010's")) %>%
+par_cord <-top_5 %>%
+            filter(abs_peak_position == 1, (Decade == "1960's"| Decade =="2010's")) %>%
             mutate(loudness = loudness/-60) %>%
-            select(decade, mode, song_features)
+            select(Decade, mode, song_features)
 
 
-ggparcoord(data = par_cord_kq, columns = 2:10, 
+ggparcoord(data = par_cord, columns = 2:10, 
            scale = 'uniminmax', 
-           groupColumn = 'decade',
-           alphaLines = 1, splineFactor = 7,
-           title = "Features of Songs that Peaked at the No.1 on Charts") +
-  xlab('Song Feature')
+           groupColumn = 'Decade',
+           alphaLines = 1, splineFactor = 7) + 
+  ggtitle('Features of Songs that Peaked at the No.1 Position on Billboard Charts')  +
+  xlab('Song Feature') +
+  theme(plot.title = element_text(size = 18, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12))
+ 
 
 
 
@@ -102,8 +107,8 @@ ggparcoord(data = par_cord_kq, columns = 2:10,
 ```{r, fig.height = 15, fig.width=15}
 genre_5 <- top_5 %>%
             subset(spotify_genre_clean != 'NA') %>%
-            rename(Genre = spotify_genre_clean,
-                   Decade = decade)
+            rename(Genre = spotify_genre_clean)
+
 genre_names <- distinct(genre_5, Genre)[1]
 num_colors <- count(genre_names)
 fills18 <- colorRampPalette(brewer.pal(num_colors, 'Spectral'))
@@ -116,7 +121,10 @@ mosaic(Genre ~ Decade,
        highlighting_fill = fills18,
        data = genre_5,
        labeling= labeling_border(rot_labels = c(0,0,0,0)),
-       spacing = vcd::spacing_equal(sp = unit(0, "lines"))) 
+       spacing = vcd::spacing_equal(sp = unit(0, "lines")),
+       gp_varnames = gpar(fontsize = 14, fontface = 1),
+       gp_labels = gpar(fontsize = 13),
+       main = 'Top 5 Songs by Genre Across the Decades')
 
 
 ```
@@ -144,5 +152,5 @@ bottom_5 %>%
   scale_color_cyclical(name = "Cycle", values = c("lightblue", "blue")) +
   ggtitle("Bottom 5 songs' features")
 ```
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
 

@@ -95,10 +95,12 @@ Again, data from the 1950s was omitted since it was an incomplete decade (though
 
 ## What artists and songs have trended since 2000?
 ```{r data cleaning}
-data_2000 <- data %>% filter(week_id >= as.Date("2000-1-1"))
+data_2000 <- data %>% 
+              mutate(week_id = as.Date(week_id,  "%m/%d/%Y")) %>%
+              filter(week_id >= as.Date("2000-1-1"))
 ```
 
-```{r top 50 songs by num weeks on charts}
+```{r top 50 songs by num weeks on charts, fig.width = 12, fig.height = 10}
 top_song <- data_2000 %>% 
   group_by(song, performer) %>% 
   slice(which.max(weeks_on_chart)) %>% 
@@ -107,8 +109,9 @@ top_song <- data_2000 %>%
 
 
 ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre_clean)) +
-  geom_point() +
-  ggtitle('Top 50 with Most weeks on Charts') + xlab('') + ylab('') +
+  geom_point(size = 3) +
+  ggtitle('50 Songs with the Longest Time on Charts, Since 2000') + xlab('Total Weeks') + ylab('Song') +
+  labs(colour= 'Genre') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
@@ -119,7 +122,7 @@ ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), colo
 Insight:
 
 
-```{r top song by Num of weeks at No1}
+```{r top song by Num of weeks at No1, fig.width = 12, fig.height = 10}
 top_song_1 <- data_2000 %>% 
   group_by(song) %>% 
   filter(week_position == 1) %>% 
@@ -129,19 +132,20 @@ top_song_1 <- data_2000 %>%
   head(50)
 
 ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)) +
-  geom_point() + 
-  ggtitle('Top Songs with Most Weeks at No.1') + xlab('Number of Weeks') + ylab('Song Title') +
+  geom_point(size = 3) + xlim(c(5, 20)) +
+  ggtitle('Top Songs with Most Weeks at No.1, Since 2000') + xlab('Total Weeks') + ylab('Song') +
+  labs(colour= 'Genre') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 12),
-        legend.title = element_text(size = 14))
+        legend.title = element_text(size = 14)) 
 ```
 
 Insight:
 
 
-```{r top artists by num songs on chart}
+```{r top artists by num songs on chart, fig.width = 10, fig.height = 10}
 top_artists <- data_2000 %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
@@ -151,21 +155,19 @@ top_artists <- data_2000 %>%
   head(50)
 
 ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
-  geom_point() +
-  ggtitle('Artists with the Most Songs in Top 100') + xlab('Number of Songs') + 
+  geom_point(size = 3) +
+  ggtitle('Artists with the Most Songs in Top 100, Since 2000') + xlab('Total Songs') + 
   ylab('Artist') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 14))
+        axis.text = element_text(size = 12))
 
 ```
 
 Insight:
 
 
-```{r top artists by No1 songs on chart}
+```{r top artists by No1 songs on chart, fig.width = 10, fig.height = 10}
 top_artists_1 <- data_2000 %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 
@@ -176,13 +178,11 @@ top_artists_1 <- data_2000 %>%
   head(35)
 
 ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
-  geom_point() +
-  ggtitle('Artists with Most Songs at No.1') + xlab('Number of Songs') + ylab('Artist') +
+  geom_point(size = 3) +
+  ggtitle('Artists with Most No.1 Songs, Since 2000') + xlab('Total No.1 Songs') + ylab('Artist') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12),
-        legend.text = element_text(size = 12),
-        legend.title = element_text(size = 14))
+        axis.text = element_text(size = 12))
 
 ```
 

@@ -77,8 +77,8 @@
             // create SVG for our alluvial plot
             // todo update to use top,bottom,right,left padding
             
-            var w = 1000
-            var h = 800
+            var w = 800
+            var h = 480
             var padding = 50;
 
             var svg = d3.select("body")
@@ -102,7 +102,7 @@
             };
 
             // ingest alluvial csv data
-            d3.csv("billboard_alluvial_final.csv", rowConverter)
+            d3.csv("https://raw.githubusercontent.com/alexandriaGuo/billboard-top-100/main/interactive/billboard_alluvial_final.csv", rowConverter)
                 .then(function(data) {
                     dataset = data;
 

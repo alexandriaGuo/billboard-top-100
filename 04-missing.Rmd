@@ -1,7 +1,9 @@
 # Missing values
 ```{r, include=FALSE}
 source('plot_missing.R')
+library(tidyverse)
 library(mi)
+library(vcd)
 
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE)
@@ -44,3 +46,88 @@ plot_missing(spotify, percent=TRUE)
 In our exploration of the dataset, we note that the `spotify_track_id` (trk) can uniquely identify songs on Spotify. Whenever `spotify_track_id` is missing, all of the audio features are also missing, as in Patterns 3 and 4 --- we hypothesize that this is the case because Spotify metadata and other measures cannot be accessed without this id. Pattern 10 does not follow this trend, but only occurs in 4 rows total in the entire dataset. 
 
 We also see that missing only `spotify_track_preview_url` (url) is the second most common missing  pattern, at around 34-35%. It is also generally missing from around 50% of our data points; however, this feature is just a link to a 30 second preview of the song. We likely will not find this pattern particularly impactful, as this feature will probably not be utilized in our project. We believe this is feature is MCAR, "Missing Completely At Random." Additionally, we see that the features `song_id` (id), `artist` (art), and `song` (name) do not have any missing data. We believe this is because `song_id` is a unique identifier that is the concatenation of the artist and song columns, and if both song and artist data were missing, the entire row would also be missing because it would be impossible to find the right song.
+
+```{r AG data cleaning, echo=FALSE}
+rawdata <- readr::read_csv("billboard_spotify_cleaned.csv")
+rawdata$spotify_genre_clean <- as.factor(rawdata$spotify_genre_clean)
+rawdata$week_id <- as.Date(rawdata$week_id, format="%m/%d/%Y")
+
+data <- rawdata
+data$missing <-ifelse(rowSums(is.na(data)) >= 1, TRUE, FALSE)
+# sort by (week?), song, then artist
+data <- data[order(data$performer,
+                   data$song,
+                   data$week_id),]
+summdata <- data %>% 
+  group_by(song, performer) %>%
+  summarise(first_week = min(week_id),
+            last_week = max(week_id),
+            total_peak = min(peak_position),
+            total_instances = max(instance),
+            total_weeks=n()) %>% # found to be more accurate than max(weeks_on_chart)
+  ungroup()
+
+uniqdata <- data %>%
+  select(c("spotify_genre_clean", "song", "performer",
+           "key", "mode", "tempo", "time_signature",
+           "danceability", "energy", "loudness", 
+           "speechiness", "acousticness", "instrumentalness",
+           "liveness", "valence",
+           "missing", # custom column
+           "spotify_genre", "spotify_track_popularity")) %>% 
+  # keeping original genre to check
+  unique() %>%
+  inner_join(summdata, by=c("song", "performer"))
+```
+
+```{r AG Missingness over time, echo=FALSE}
+uniqdata %>%
+  mutate(year = as.numeric(format(last_week, format="%Y"))) %>%
+  group_by(year) %>%
+  summarise(Total = sum(missing)/n(),
+            Genre = sum(is.na(spotify_genre_clean))/n()) %>%
+  # need percentages due to non-standard number of songs/year
+  ungroup() %>%
+  pivot_longer(cols=c(Total, Genre),
+               names_to = "type",
+               values_to = "perc") %>% 
+  mutate(perc = 100*perc,
+         type = as.factor(type)) %>%
+  ggplot(mapping=aes(x=year, y=perc, 
+                     color=fct_reorder(type, perc), 
+                     group=fct_reorder(type, perc))) +
+  geom_line() +
+  scale_color_discrete(name="Name type") +
+  scale_x_continuous(limits = c(1958, 2021)) + 
+  scale_y_continuous(limits = c(0, 50)) +
+  labs(x="Year", y="% Missing", 
+       title="Missingness by year")
+# FIX FCT_REORDER TO MATCH FIGURE
+# add annotated lines of best fit
+```
+
+```{r AG Missingness featured, echo=FALSE}
+temp <- uniqdata %>%
+  mutate(feat = str_detect(performer, regex('[:space:]ft[:space:]', ignore_case=TRUE)) |
+           str_detect(performer, regex('[:space:]ft.[:space:]', ignore_case=TRUE)) |
+           str_detect(performer, regex('[:space:]feat[:space:]', ignore_case=TRUE)) |
+           str_detect(performer, regex('[:space:]feat.[:space:]', ignore_case=TRUE)) |
+           str_detect(performer, regex('[:space:]featuring[:space:]', ignore_case=TRUE)) |
+           str_detect(song, regex('[:space:]featuring[:space:]', ignore_case=TRUE))) %>%
+  # almost all are of the form "[:space:]featuring[:space:]" in performer
+  # many features are actually recorded in the form "[artist] & [ft. artist]"
+  # sometimes "with" or "x" or other choices, as well
+  # but these cannot be easily distinguished from bands with "&" in their names
+  group_by(feat, missing) %>%
+  summarise(Freq = n()) %>% # vcd::mosaic convention
+  ungroup() # relevel factors 
+
+mosaic(missing~feat, direction = c("v", "h"), temp, 
+       highlighting_fill = c("#FDAE61","#D53E4F"),
+       main = "Missingness in songs w/ featured artists")
+```
+
+```{r plot_missing, echo=FALSE}
+# requires minor fixups
+plot_missing(rawdata)
+```

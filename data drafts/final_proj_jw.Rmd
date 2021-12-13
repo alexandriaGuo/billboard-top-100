@@ -16,7 +16,7 @@ library(lubridate)
 ## Ingest the data:
 We did a bit of data cleaning and wrangling using python, and this is our final cleaned version of the data set prepped for our data exploration and visualization.
 ```{r load data}
-data <- read_csv("~/Desktop/Columbia/Fall2021/STAT5702/billboard-top-100/billboard_spotify_cleaned.csv")
+data <- read_csv("~/Desktop/Columbia/Fall2021/STAT5702/billboard-top-100/billboard_spotify_cleaned_final.csv")
 
 data$week_id = as.Date(data$week_id, format = '%m/%d/%Y') 
 glimpse(data)
@@ -25,24 +25,23 @@ glimpse(data)
 ```{r data cleaning}
 data_2000 <- data %>% filter(week_id >= as.Date("2000-1-1"))
 
-data_filtered <- data_2000[,1:9]
 ```
 
 ```{r top 50 songs by # of weeks on charts}
-top_song <- data_filtered %>% 
+top_song <- data_2000 %>% 
   group_by(song, performer) %>% 
   slice(which.max(weeks_on_chart)) %>% 
   arrange(desc(weeks_on_chart)) %>% 
   head(50)
 
 
-ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre)) +
+ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre_clean)) +
   geom_point()
 
 
 ```
 ```{r top song by # of weeks at #1}
-top_song_1 <- data_filtered %>% 
+top_song_1 <- data_2000 %>% 
   group_by(song) %>% 
   filter(week_position == 1) %>% 
   add_count() %>% 
@@ -50,14 +49,14 @@ top_song_1 <- data_filtered %>%
   arrange(desc(n)) %>% 
   head(50)
 
-ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
+ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)) +
   geom_point()
 
 
 ```
 
 ```{r top artists by number of songs on chart}
-top_artists <- data_filtered %>% 
+top_artists <- data_2000 %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
   group_by(performer) %>% 
@@ -70,7 +69,7 @@ ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
 ```
 
 ```{r top artists by number of #1 songs on chart}
-top_artists_1 <- data_filtered %>% 
+top_artists_1 <- data_2000 %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 
   slice(which.max(week_id)) %>% 

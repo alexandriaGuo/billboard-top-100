@@ -4,3 +4,9 @@
 
 You can also access the plot on VizHub:
 https://vizhub.com/jw4169/20ca79535ad2415383c09787459a5d22?edit=files&file=index.html
+
+One thing that we discovered from our interactive plot was that many songs seem to enter the chart at the same time. The top songs often stay pretty horizontal across the month, which shows that very popular songs remain at the top for a while.
+We know the tooltips can get cut off on the right side if the song name or artist are too long. However, we ran out of time to update everything to use a right margin, and there is an easy workaround by just hovering over the line to the left of the graph.
+There are a couple instances where songs with the name made it on charts separately under different artists. As a result, there is a bit of wonkiness where you can see a vertical line between data points for It’s Beginning to Look a Lot Like Christmas in Dec 2020, because the song charted both with Michael Buble as well as with Perry Como And The Fontane Sisters With Mitchell Ayres And His Orchestra, so I think we might have had issues with our data merging here.
+
+Credit: Jane Pong’s https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 for the date slider framework and Yong Lee’s https://bl.ocks.org/Qizly/8f6ba236b79d9bb03a80 for the tooltip format.

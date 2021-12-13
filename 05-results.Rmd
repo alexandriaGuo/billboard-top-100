@@ -94,6 +94,8 @@ Again, data from the 1950s was omitted since it was an incomplete decade (though
 
 
 ## What artists and songs have trended since 2000?
+  To take a deeper look into music from more recent memory, we wanted to explore some trends in how the most popular artists and songs have charted on the Billboard Top 100 since 2000. 
+
 ```{r data cleaning}
 data_2000 <- data %>% 
               mutate(week_id = as.Date(week_id,  "%m/%d/%Y")) %>%
@@ -110,7 +112,7 @@ top_song <- data_2000 %>%
 
 ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre_clean)) +
   geom_point(size = 3) +
-  ggtitle('50 Songs with the Longest Time on Charts, Since 2000') + xlab('Total Weeks') + ylab('Song') +
+  ggtitle('Top 50 Songs with the Longest Time on Charts, Since 2000') + xlab('Total Weeks') + ylab('Song') +
   labs(colour= 'Genre') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
@@ -119,7 +121,7 @@ ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), colo
         legend.title = element_text(size = 14))
 ```
 
-Insight:
+  Which songs have managed to stay on the Top 100 charts the longest? We wanted to look at a song’s popularity from the angle of how long it stayed in the Top 100 songs. Out of the 50 songs that were on the charts the longest, Imagine Dragons’ “Radioactive” remained in the Top 100 for a total of 87 weeks; the four songs with the greatest longevity remained on the chart each for over 76 weeks. Rock and pop appear to be the two most popular genres with each comprising of 15 and 11, respectively, out of the total 50 songs charted.
 
 
 ```{r top song by Num of weeks at No1, fig.width = 12, fig.height = 10}
@@ -133,7 +135,7 @@ top_song_1 <- data_2000 %>%
 
 ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)) +
   geom_point(size = 3) + xlim(c(5, 20)) +
-  ggtitle('Top Songs with Most Weeks at No.1, Since 2000') + xlab('Total Weeks') + ylab('Song') +
+  ggtitle('Top 50 Songs with Most Weeks at No.1, Since 2000') + xlab('Total Weeks') + ylab('Song') +
   labs(colour= 'Genre') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
@@ -142,7 +144,7 @@ ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)
         legend.title = element_text(size = 14)) 
 ```
 
-Insight:
+  Alternatively, we wanted to see how long the most popular songs (i.e those that ranked first on the charts) were able to remain at their top position. Lil ‘Nas’ “Old Town Road” spent 19 weeks at the Number 1 position while Luis Fonsi’s “Despacito” spent 16 weeks. Out of the 50 songs that remained at Number 1 the longest, the majority of the songs did not maintain their position for more than 10 weeks, with only 3 total lasting for 15 weeks or longer. Different the results from songs that stayed in the Top 100, the most popular genres here were hip hop (15), pop (9), and rap (9). Similarly, there is little overlap between songs that were in the Top 100 for the longest compared to songs that were at the Top 1 position which seems to imply that although some songs may quickly become America’s favorites, they don’t necessarily stay in popular memory for as long.  
 
 
 ```{r top artists by num songs on chart, fig.width = 10, fig.height = 10}
@@ -156,7 +158,7 @@ top_artists <- data_2000 %>%
 
 ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
   geom_point(size = 3) +
-  ggtitle('Artists with the Most Songs in Top 100, Since 2000') + xlab('Total Songs') + 
+  ggtitle('Top 50 Artists with the Most Songs in Top 100, Since 2000') + xlab('Total Songs') + 
   ylab('Artist') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
@@ -164,7 +166,7 @@ ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
 
 ```
 
-Insight:
+
 
 
 ```{r top artists by No1 songs on chart, fig.width = 10, fig.height = 10}
@@ -179,7 +181,7 @@ top_artists_1 <- data_2000 %>%
 
 ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
   geom_point(size = 3) +
-  ggtitle('Artists with Most No.1 Songs, Since 2000') + xlab('Total No.1 Songs') + ylab('Artist') +
+  ggtitle('Top 50 Artists with Most No.1 Songs, Since 2000') + xlab('Total No.1 Songs') + ylab('Artist') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12))

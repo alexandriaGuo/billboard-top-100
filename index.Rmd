@@ -7,3 +7,19 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+##Graph TO DOs and also DELETE ME PLS
+Check all plots for title, axis labels, UoM, reasonable axis limits, fontsize, label rotation
+plot annotations/subheadings/call-outs (parcoord)
+
+Title: Y vs X
+Subheading: (insight if you're inspired)
+
+Apply Theme to all (grey 14)
+
+## Code To Dos:
+Check all libraries are in _common file
+##Writing To dos
+
+Write analyses/insights for each plot: google docs for copy + pasta
+
+Finish Conclusions (compile on google docs 1st)

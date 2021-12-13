@@ -1,1 +1,159 @@
 # Results
+
+```{r, echo=FALSE}
+data <- readr::read_csv("billboard_spotify_cleaned_.csv")
+```
+
+##What features define song popularity through the decades?
+```{r, echo = FALSE}
+top_5<- data %>% 
+          filter(peak_position <= 5) %>%
+          mutate(date = as.Date(week_id,  "%m/%d/%Y"),
+                 song_id = paste(song, performer, sep="_"),
+                 year = year(date),
+                 decade = paste(as.character(floor(year/10) *10),"'s", sep="")) %>%
+          filter(year >= 1960) %>%
+          group_by(song_id, instance) %>%   #including instance: A song will show up mult time/year
+          mutate(abs_peak_position = min(peak_position),
+                 max_weeks_on_chart = max(weeks_on_chart)) %>%
+          distinct(abs_peak_position, .keep_all = TRUE) %>%
+          ungroup()
+
+top_5 %>% 
+  select(song_id, song_features, decade) %>% 
+  mutate(loudness = loudness/-60 ) %>%
+  pivot_longer(song_features, values_to = 'values', names_to='features', values_drop_na = TRUE) %>%
+  ggplot(aes(x=values, y = features, fill = features)) +
+  geom_density_ridges(alpha = 0.5) +
+  scale_fill_cyclical(name = "Cycle", values = c("lightblue", "blue"))+
+  scale_color_cyclical(name = "Cycle", values = c("lightblue", "blue")) +
+  ggtitle("Top 5 Songs' features") + xlab('Value') + ylab('Song Features') + facet_wrap(~decade)
+
+
+```
+
+Some skew toward higher valence (more positive), low speechiness (presence of words). Values above 0.66 describes tracks that are mostly spoken words. 0.33-0.66 represents tracks with music and speech (like rap). loudness correlates to physical strength, scaled to the range between -60 to 0 db. Liveness greater than 0.8 indicates a strong likelihood that song is live. Instrumentalness (closer to 1 = more likely no vocals). 
+
+```{r, echo = FALSE, fig.height = 7, fig.width = 12}
+par_cord_kq <-top_5 %>%
+            filter(abs_peak_position == 1, (decade == "1960's"| decade =="2010's")) %>%
+            mutate(loudness = loudness/-60) %>%
+            select(decade, mode, song_features)
+
+
+ggparcoord(data = par_cord_kq, columns = 2:10, 
+           scale = 'uniminmax', 
+           groupColumn = 'decade',
+           alphaLines = 1, splineFactor = 7,
+           title = "Features of Songs that Peaked at the No.1 on Charts") +
+  xlab('Song Feature')
+
+
+
+```
+
+
+
+
+```{r, echo = FALSE, fig.height = 15, fig.width=15}
+genre_5 <- top_5 %>%
+            subset(spotify_genre_clean != 'NA') %>%
+            rename(Genre = spotify_genre_clean,
+                   Decade = decade)
+genre_names <- distinct(genre_5, Genre)[1]
+num_colors <- count(genre_names)
+fills18 <- colorRampPalette(brewer.pal(num_colors, 'Spectral'))
+
+genre_5$Genre <- fct_rev(fct_infreq(genre_5$Genre))
+genre_5$Genre <- fct_relevel(genre_5$Genre, "trap", "jazz", "indie", "k-pop","punk", "house", "blues", "edm", "funk", "country", "r&b", "other")
+
+mosaic(Genre ~ Decade, 
+       direction = c("v", "h"),
+       highlighting_fill = fills18,
+       data = genre_5,
+       labeling= labeling_border(rot_labels = c(0,0,0,0)),
+       spacing = vcd::spacing_equal(sp = unit(0, "lines")))
+
+
+```
+Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm, k-pop, hip-hop and rap didn't even exist in earlier decades, and did not show any popularity until the last 10-20 years.
+
+
+##What artists and songs have trended since 2000?
+```{r data cleaning}
+
+data_2000 <- data %>%
+              mutate(week_id = as.Date(data$week_id, format = '%m/%d/%Y')) %>%
+              filter(week_id >= as.Date("2000-1-1"))
+
+data_filtered <- data_2000[,1:9]
+```
+
+```{r top 50 songs by # of weeks on charts}
+top_song <- data_filtered %>% 
+  group_by(song, performer) %>% 
+  slice(which.max(weeks_on_chart)) %>% 
+  arrange(desc(weeks_on_chart)) %>% 
+  head(50)
+
+
+ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre)) +
+  geom_point()
+
+
+```
+
+Insight:
+
+
+```{r top song by # of weeks at #1}
+top_song_1 <- data_filtered %>% 
+  group_by(song) %>% 
+  filter(week_position == 1) %>% 
+  add_count() %>% 
+  slice(which.max(week_id)) %>% 
+  arrange(desc(n)) %>% 
+  head(50)
+
+ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
+  geom_point()
+
+
+```
+
+Insight:
+
+
+```{r top artists by number of songs on chart}
+top_artists <- data_filtered %>% 
+  group_by(performer, song) %>% 
+  slice(which.max(week_id)) %>% 
+  group_by(performer) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  head(50)
+
+ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
+  geom_point()
+```
+
+Insight:
+
+
+```{r top artists by number of #1 songs on chart}
+top_artists_1 <- data_filtered %>% 
+  group_by(performer, song) %>% 
+  filter(week_position==1) %>% 
+  slice(which.max(week_id)) %>% 
+  group_by(performer) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  head(35)
+
+ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
+  geom_point()
+```
+
+Insight:
+
+##What defines a genre and what makes k-pop so unique?

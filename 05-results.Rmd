@@ -95,39 +95,32 @@ Again, data from the 1950s was omitted since it was an incomplete decade (though
 
 ## What artists and songs have trended since 2000?
 ```{r data cleaning}
-
-data_2000 <- data %>%
-              mutate(week_id = as.Date(data$week_id, format = '%m/%d/%Y')) %>%
-              filter(week_id >= as.Date("2000-1-1"))
-
-data_filtered <- data_2000[,1:9]
+data_2000 <- data %>% filter(week_id >= as.Date("2000-1-1"))
 ```
 
 ```{r top 50 songs by num weeks on charts}
-top_song <- data_filtered %>% 
+top_song <- data_2000 %>% 
   group_by(song, performer) %>% 
   slice(which.max(weeks_on_chart)) %>% 
   arrange(desc(weeks_on_chart)) %>% 
   head(50)
 
 
-ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre)) +
-  geom_point() + 
+ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), color=spotify_genre_clean)) +
+  geom_point() +
   ggtitle('Top 50 with Most weeks on Charts') + xlab('') + ylab('') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 14))
-
-
 ```
 
 Insight:
 
 
 ```{r top song by Num of weeks at No1}
-top_song_1 <- data_filtered %>% 
+top_song_1 <- data_2000 %>% 
   group_by(song) %>% 
   filter(week_position == 1) %>% 
   add_count() %>% 
@@ -135,7 +128,7 @@ top_song_1 <- data_filtered %>%
   arrange(desc(n)) %>% 
   head(50)
 
-ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
+ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)) +
   geom_point() + 
   ggtitle('Top Songs with Most Weeks at No.1') + xlab('Number of Weeks') + ylab('Song Title') +
   theme(plot.title = element_text(size = 16, hjust=0.5),
@@ -143,16 +136,13 @@ ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre)) +
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 14))
-
-
-
 ```
 
 Insight:
 
 
 ```{r top artists by num songs on chart}
-top_artists <- data_filtered %>% 
+top_artists <- data_2000 %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
   group_by(performer) %>% 
@@ -176,7 +166,7 @@ Insight:
 
 
 ```{r top artists by No1 songs on chart}
-top_artists_1 <- data_filtered %>% 
+top_artists_1 <- data_2000 %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 
   slice(which.max(week_id)) %>% 
@@ -256,16 +246,14 @@ cbind(first, last[,-1]) %>%
                      group=Year_bin)) +
   geom_line() +
   scale_color_discrete(name="Year Charted") +
-  scale_x_continuous(limits = c(1958, 2021)) +
+  scale_x_continuous(limits = c(1959, 2020)) +
   scale_y_continuous(limits = c(0, 800)) +
   labs(x="Year", y="Frequency",
        title="Number of unique songs in the Top 100")  +
-  theme_gray() + theme(plot.title = element_text(size = 14, hjust=0.5))
-# FIX FCT_REORDER TO MATCH FIGURE
-# add annotated lines of best fit
+  theme_gray()
 ```
 
-A perennial sentiment throughout the generations—in the United States, at least—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
+A perennial sentiment throughout the generations—--in the United States, at least--—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
 
   We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2007 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
 
@@ -301,10 +289,11 @@ fulldata %>%
   theme_gray()
 # thus choose acousticness (12), danceability (8), energy (9), 
 # liveness (14), loudness (10), tempo (6), and valence (15)
-# removed speechiness (11) after looking at the pca summary
+# included speechiness (11) despite reducing variance explained to match other analyses
 featcols <- c(6,8,9,10,11,12,14,15)
 
-pcs <- prcomp(fulldata[,featcols], scale.=TRUE)
+pcs <- prcomp(fulldata[which(fulldata$first_week > 2000),
+                       featcols], scale.=TRUE)
 expvar <- 100*(pcs$sdev^2)/sum(pcs$sdev^2)
 
 # https://stackoverflow.com/questions/6578355/plotting-pca-biplot-with-ggplot2
@@ -318,15 +307,18 @@ datapc <- transform(datapc,
                     v1 = .8 * mult * (get("PC1")),
                     v2 = .8 * mult * (get("PC2")))
 
-temp <- cbind(data.frame(pcs$x), fulldata) %>%
-  filter(total_peak < 50) 
+temp <- cbind(data.frame(pcs$x), fulldata[which(fulldata$first_week > 2000),]) %>%
+  filter(total_peak <= 50) %>% 
+  mutate(BTS=ifelse(str_detect(performer, regex('BTS', ignore_case=TRUE)) |
+                            str_detect(performer, regex('j-hope', ignore_case=TRUE)), TRUE, FALSE))
 
 temp %>% 
   ggplot(aes(x=PC1, y=PC2)) +
   geom_point(aes(color = spotify_genre_clean, 
                  alpha = 0.01, stroke = 0)) +
   geom_point(subset(temp, spotify_genre_clean == 'kpop'),
-             mapping=aes(color = spotify_genre_clean)) +
+             mapping=aes(color = spotify_genre_clean,
+             shape=as.factor(BTS))) +
   geom_text(data=datapc, aes(x=v1, y=v2, label=varnames),
             nudge_x=ifelse(datapc$v1 > 0, 0.3, -0.3),
             nudge_y=ifelse(datapc$v2 > 0, 0.4, -0.4), 
@@ -338,9 +330,10 @@ temp %>%
   scale_alpha(guide="none") +
   scale_size(guide="none") +
   scale_color_discrete(name="Genre") +
+  scale_shape_discrete(name="BTS") + # make cleaner
   labs(x=paste("PC 1 (",format(expvar[1], digits=3),"%)"),
        y=paste("PC 2 (",format(expvar[2], digits=3),"%)"),
-       title="Biplot of musical features") +
+       title="Biplot of musical features for Top 50 songs since 2000") +
   theme_gray()
 ```
 
@@ -352,15 +345,18 @@ temp %>%
 
 
 ```{r AG parcoords kpop}
-# REQUIRES MOST TWEAKING
 fulldata %>%
   mutate(year = as.numeric(format(first_week, format="%Y"))) %>%
-  filter(((year >= 2009) & (total_peak <= 5)) | 
-           (spotify_genre_clean == "kpop")) %>% 
-  ggparcoord(columns = featcols, scale="uniminmax", alphaLines=0.1, splineFactor=10,
-             groupColumn = 'spotify_genre_clean') +
-  labs(title="Auditory features", x="Auditory features", y="Count") +
-  theme(legend.position = "none") 
+  # mutate(year = as.numeric(format(first_week, format="%Y")),
+  #       BTS = ifelse(str_detect(performer, regex('BTS', ignore_case=TRUE)) |
+  #        str_detect(performer, regex('j-hope', ignore_case=TRUE)), "BTS", spotify_genre_clean)) %>%
+  filter(((year >= 2015) & (total_peak <= 1)) | 
+           (spotify_genre_clean == "kpop")) %>%
+  ggparcoord(columns = featcols, scale="uniminmax", alphaLines=0.5, splineFactor=10,
+             groupColumn = "spotify_genre_clean") + #groupColumn = 'BTS') +
+  labs(title="Auditory features of Top 1 songs since 2015", x="Auditory features", y="Count") +
+  scale_color_discrete(guide="none") +
+  theme_gray()
 ```
 
   To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.

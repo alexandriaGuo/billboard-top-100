@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8  | final_proj_kq</title>
+  <meta name="description" content="Chapter 8  | final_proj_kq" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8  | final_proj_kq" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8  | final_proj_kq" />
+  
+  
+  
+
+<meta name="author" content="Alexandria Guo, Julia Wang, Kevia Qu" />
+
+
+<meta name="date" content="2021-12-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="conclusion.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">billboard100</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#ingest-the-data"><i class="fa fa-check"></i><b>7.1</b> Ingest the data:</a></li>
+<li class="chapter" data-level="7.2" data-path="conclusion.html"><a href="conclusion.html#question-what-are-the-musical-qualities-that-define-a-popular-song"><i class="fa fa-check"></i><b>7.2</b> Question: What are the musical qualities that define a popular song</a></li>
+<li class="chapter" data-level="7.3" data-path="conclusion.html"><a href="conclusion.html#what-features-define-popular-songs"><i class="fa fa-check"></i><b>7.3</b> What features define popular songs</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>8</b> </a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">final_proj_kq</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="section" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> </h1>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="section.html#cb4-1" aria-hidden="true" tabindex="-1"></a>par_cord <span class="ot">&lt;-</span>top_5 <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="section.html#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(abs_peak_position <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="section.html#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">loudness =</span> loudness<span class="sc">/-</span><span class="dv">60</span>,</span>
+<span id="cb4-4"><a href="section.html#cb4-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">year =</span> <span class="fu">year</span>(date),</span>
+<span id="cb4-5"><a href="section.html#cb4-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">decade =</span> <span class="fu">as.character</span>(<span class="fu">floor</span>(year<span class="sc">/</span><span class="dv">10</span>) <span class="sc">*</span><span class="dv">10</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="section.html#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(decade, mode, song_features)</span>
+<span id="cb4-7"><a href="section.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="section.html#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="section.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_grey</span>(<span class="dv">14</span>))</span>
+<span id="cb4-10"><a href="section.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggparcoord</span>(<span class="at">data =</span> par_cord, <span class="at">scale =</span> <span class="st">&#39;uniminmax&#39;</span>)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="1152" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="section.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#           title=&#39;&#39;) + </span></span>
+<span id="cb5-2"><a href="section.html#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># xlab(&#39;Crime&#39;) + ylab(&#39;Total Count&#39;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="section.html#cb6-1" aria-hidden="true" tabindex="-1"></a>genre_5 <span class="ot">&lt;-</span> top_5 <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="section.html#cb6-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date),</span>
+<span id="cb6-3"><a href="section.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">decade =</span> <span class="fu">as.character</span>(<span class="fu">floor</span>(year<span class="sc">/</span><span class="dv">10</span>) <span class="sc">*</span><span class="dv">10</span>)) <span class="co">#%&gt;% </span></span>
+<span id="cb6-4"><a href="section.html#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="co">#group_by(decade, spotify_genre) %&gt;%</span></span>
+<span id="cb6-5"><a href="section.html#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="co">#mutate(count = n()) %&gt;%</span></span>
+<span id="cb6-6"><a href="section.html#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="co">#distinct(spotify_genre, decade, count)</span></span>
+<span id="cb6-7"><a href="section.html#cb6-7" aria-hidden="true" tabindex="-1"></a>num_colors <span class="ot">&lt;-</span> <span class="fu">count</span>(<span class="fu">distinct</span>(genre_5, spotify_genre_clean))[<span class="dv">1</span>]</span>
+<span id="cb6-8"><a href="section.html#cb6-8" aria-hidden="true" tabindex="-1"></a>fills18 <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">brewer.pal</span>(num_colors, <span class="st">&#39;Spectral&#39;</span>))</span>
+<span id="cb6-9"><a href="section.html#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="section.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(spotify_genre_clean <span class="sc">~</span> decade, </span>
+<span id="cb6-11"><a href="section.html#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">direction =</span> <span class="fu">c</span>(<span class="st">&quot;v&quot;</span>, <span class="st">&quot;h&quot;</span>),</span>
+<span id="cb6-12"><a href="section.html#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">highlighting_fill =</span> fills18,</span>
+<span id="cb6-13"><a href="section.html#cb6-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">labeling=</span> <span class="fu">labeling_border</span>(<span class="at">rot_labels =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">90</span>,<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb6-14"><a href="section.html#cb6-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">just_labels =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, </span>
+<span id="cb6-15"><a href="section.html#cb6-15" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&quot;center&quot;</span>, </span>
+<span id="cb6-16"><a href="section.html#cb6-16" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&quot;center&quot;</span>, </span>
+<span id="cb6-17"><a href="section.html#cb6-17" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&quot;center&quot;</span>)),</span>
+<span id="cb6-18"><a href="section.html#cb6-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> genre_5)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="1440" />
+Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it’s evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn’t even exist in earlier decades, and did not show any popularity until the last 10 years.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="section.html#cb7-1" aria-hidden="true" tabindex="-1"></a>bottom_5 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="section.html#cb7-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(week_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="section.html#cb7-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(week_id,  <span class="st">&quot;%m/%d/%Y&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="section.html#cb7-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">filter</span>(week_position <span class="sc">&gt;=</span> <span class="dv">95</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="section.html#cb7-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">arrange</span>(<span class="fu">desc</span>(date))</span>
+<span id="cb7-6"><a href="section.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="section.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bottom_5, <span class="fu">aes</span>(<span class="at">x =</span> danceability, <span class="at">y =</span> spotify_genre, <span class="at">fill =</span> spotify_genre))  <span class="sc">+</span> <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="conclusion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alexandriaGuo/billboard-top-100/edit/main/final_proj_kq.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/alexandriaGuo/billboard-top-100/blob/main/final_proj_kq.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

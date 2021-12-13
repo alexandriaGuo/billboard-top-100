@@ -90,7 +90,7 @@ mosaic(Genre ~ Decade,
        main = 'Top 5 Songs by Genre Across the Decades')
 
 ```
-Again, data from the 1950s was omitted since it was an incomplete decade (though data from the 2020s was kept since it is more recent and relevant). Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 19050s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. 
+Again, data from the 1950s was omitted since it was an incomplete decade (though data from the 2020s was kept since it is more recent and relevant). Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 1950s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. 
 
 
 ## What artists and songs have trended since 2000?
@@ -147,7 +147,7 @@ ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)
   Alternatively, we wanted to see how long the most popular songs (i.e those that ranked first on the charts) were able to remain at their top position. Lil ‘Nas’ “Old Town Road” spent 19 weeks at the Number 1 position while Luis Fonsi’s “Despacito” spent 16 weeks. Out of the 50 songs that remained at Number 1 the longest, the majority of the songs did not maintain their position for more than 10 weeks, with only 3 total lasting for 15 weeks or longer. Different the results from songs that stayed in the Top 100, the most popular genres here were hip hop (15), pop (9), and rap (9). Similarly, there is little overlap between songs that were in the Top 100 for the longest compared to songs that were at the Top 1 position which seems to imply that although some songs may quickly become America’s favorites, they don’t necessarily stay in popular memory for as long.  
 
 
-```{r top artists by num songs on chart, fig.width = 10, fig.height = 10}
+```{r top artists by num songs on chart, fig.width = 9, fig.height = 9}
 top_artists <- data_2000 %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
@@ -169,7 +169,7 @@ ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
 
 
 
-```{r top artists by No1 songs on chart, fig.width = 10, fig.height = 10}
+```{r top artists by No1 songs on chart, fig.width = 9, fig.height = 9}
 top_artists_1 <- data_2000 %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 

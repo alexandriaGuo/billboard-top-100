@@ -235,7 +235,7 @@
 
                         var mousemove = function mousemove(e, d) {
                                 var coords = d3.pointer(event,this)
-                                focus.attr("transform", "translate(" + (coords[0]-60) + "," + (coords[1]-60) + ")");
+                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
                                 focus.select(".tooltip-genre").text(e.path[0].__data__[0].genre);
                                 focus.select(".tooltip-song").text(e.path[0].__data__[0].song);
                                 focus.select(".tooltip-performer").text(e.path[0].__data__[0].performer);
@@ -247,7 +247,7 @@
 
                         var mousemove_dot = function mousemove_dot(e, d) {
                                 var coords = d3.pointer(event,this)
-                                focus.attr("transform", "translate(" + (coords[0]-60) + "," + (coords[1]-60) + ")");
+                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
                                 focus.select(".tooltip-genre").text(e.path[0].__data__.genre);
                                 focus.select(".tooltip-song").text(e.path[0].__data__.song);
                                 focus.select(".tooltip-performer").text(e.path[0].__data__.performer);

@@ -101,7 +101,7 @@ uniqdata %>%
   scale_x_continuous(limits = c(1958, 2021)) + 
   scale_y_continuous(limits = c(0, 50)) +
   labs(x="Year", y="% Missing", 
-       title="Missingness by year") +
+       title="Missingness by Year") +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
@@ -130,7 +130,7 @@ temp <- uniqdata %>%
 
 mosaic(Missing~Featuring, direction = c("v", "h"), temp, 
        highlighting_fill = c("#FDAE61","#D53E4F"),
-       main = "Missingness in songs w/ featured artists",
+       main = "Missingness in Songs w/ Featured Artists",
        gp_varnames = gpar(fontsize = 14, fontface = 1),
        gp_labels = gpar(fontsize = 12))
 ```

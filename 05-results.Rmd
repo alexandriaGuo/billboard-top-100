@@ -6,7 +6,7 @@ data <- readr::read_csv("billboard_spotify_cleaned_final.csv")
 
 
 ## What artists and songs have trended since 2000?
-  To take an introductory look into the Billboard Top 100 trends of music from more recent memory, we wanted to explore some trends in how the most popular artists and songs have charted on the Billboard Top 100 since 2000. 
+To take an introductory look into the Billboard Top 100 trends of music from more recent memory, we wanted to explore some trends in how the most popular artists and songs have charted on the Billboard Top 100 since 2000. 
 
 ```{r data cleaning}
 data_2000 <- data %>% 
@@ -33,7 +33,7 @@ ggplot(top_song, aes(x = weeks_on_chart, y = reorder(song, weeks_on_chart), colo
         legend.title = element_text(size = 14))
 ```
 
-  Which songs have managed to stay on the Top 100 charts the longest? We wanted to look at a song’s popularity from the angle of how long it stayed in the Top 100 songs. Out of the 50 songs that were on the charts the longest, Imagine Dragons’ “Radioactive” remained in the Top 100 for a total of 87 weeks; the four songs with the greatest longevity remained on the chart each for over 76 weeks. Rock and pop appear to be the two most popular genres with each comprising of 15 and 11, respectively, out of the total 50 songs charted.
+Which songs have managed to stay on the Top 100 charts the longest? We wanted to look at a song’s popularity from the angle of how long it stayed in the Top 100 songs. Out of the 50 songs that were on the charts the longest, Imagine Dragons’ “Radioactive” remained in the Top 100 for a total of 87 weeks; the four songs with the greatest longevity remained on the chart each for over 76 weeks. Rock and pop appear to be the two most popular genres with each comprising of 15 and 11, respectively, out of the total 50 songs charted.
 
 
 ```{r top song by Num of weeks at No1, fig.width = 12, fig.height = 10}
@@ -56,10 +56,10 @@ ggplot(top_song_1, aes(x = n, y = reorder(song, n), color = spotify_genre_clean)
         legend.title = element_text(size = 14)) 
 ```
 
-  Alternatively, we wanted to see how long the most popular songs (i.e those that ranked first on the charts) were able to remain at their top position. Lil ‘Nas’ “Old Town Road” spent 19 weeks at the Number 1 position while Luis Fonsi’s “Despacito” spent 16 weeks. Out of the 50 songs that remained at Number 1 the longest, the majority of the songs did not maintain their position for more than 10 weeks, with only 3 total lasting for 15 weeks or longer. Different the results from songs that stayed in the Top 100, the most popular genres here were hip hop (15), pop (9), and rap (9). Similarly, there is little overlap between songs that were in the Top 100 for the longest compared to songs that were at the Top 1 position which seems to imply that although some songs may quickly become America’s favorites, they don’t necessarily stay in popular memory for as long.  
+Alternatively, we wanted to see how long the most popular songs (i.e those that ranked first on the charts) were able to remain at their top position. Lil ‘Nas’ “Old Town Road” spent 19 weeks at the Number 1 position while Luis Fonsi’s “Despacito” spent 16 weeks. Out of the 50 songs that remained at Number 1 the longest, the majority of the songs did not maintain their position for more than 10 weeks, with only 3 total lasting for 15 weeks or longer. Different the results from songs that stayed in the Top 100, the most popular genres here were hip hop (15), pop (9), and rap (9). Similarly, there is little overlap between songs that were in the Top 100 for the longest compared to songs that were at the Top 1 position which seems to imply that although some songs may quickly become America’s favorites, they don’t necessarily stay in popular memory for as long.  
 
 
-```{r top artists by num songs on chart, fig.width = 9, fig.height = 9}
+```{r top artists by num songs on chart, fig.width = 8, fig.height = 8}
 top_artists <- data_2000 %>% 
   group_by(performer, song) %>% 
   slice(which.max(week_id)) %>% 
@@ -77,11 +77,11 @@ ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
         axis.text = element_text(size = 12))
 
 ```
-  Instead of looking on at individual songs, we also wanted to explore who the most popular artists were after the turn of the millennium. Similar to viewing songs that stayed the longest in the Top 100, we plotted the top 50 artists who had the most songs enter the Top 100 Charts. Interestingly, the 3 artists with the most songs had more than double the number of songs chart compared to the rest. The Glee Cast is credited with 183 songs while Taylor Swift and Drake are credited with 119 and 99 songs, respectively. The Glee Cast appear to be unusually prolific due to covers being released alongside the popular TV show and they rarely make it to the top, but otherwise, most of the top artists are not ensembles.
+Instead of looking on at individual songs, we also wanted to explore who the most popular artists were after the turn of the millennium. Similar to viewing songs that stayed the longest in the Top 100, we plotted the top 50 artists who had the most songs enter the Top 100 Charts. Interestingly, the 3 artists with the most songs had more than double the number of songs chart compared to the rest. The Glee Cast is credited with 183 songs while Taylor Swift and Drake are credited with 119 and 99 songs, respectively. The Glee Cast appear to be unusually prolific due to covers being released alongside the popular TV show and they rarely make it to the top, but otherwise, most of the top artists are not ensembles.
 
 
 
-```{r top artists by No1 songs on chart, fig.width = 9, fig.height = 9}
+```{r top artists by No1 songs on chart, fig.width = 8, fig.height = 8}
 top_artists_1 <- data_2000 %>% 
   group_by(performer, song) %>% 
   filter(week_position==1) %>% 
@@ -99,14 +99,14 @@ ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
         axis.text = element_text(size = 12))
 
 ```
-  We also looked at the artists who had the most No.1 ranked songs and noticed that popular artists had far fewer songs make the number 1 spot, with the leading 3 artists featuring only six songs each. Taylor Swift had the most Number 1 songs, tied with Rihanna and Katy Perry. It seems to be much more rare to land multiple hit songs as only 9 out of 50 had more than 3 Number 1 songs. Unlike the comparison between popular songs, there was greater overlap between the artists that generated chart topping hits and generally popular music that made the Top 100, implying that artists that were prolific in making generally popular songs were also capable of making the top of the charts. Notably, Taylor Swift, Drake, Justin Bieber and The Weeknd were the top individual singers who had the most Top 100 songs and also were also among the 16 artists with the most chart-topping songs. 
+We also looked at the artists who had the most No.1 ranked songs and noticed that popular artists had far fewer songs make the number 1 spot, with the leading 3 artists featuring only six songs each. Taylor Swift had the most Number 1 songs, tied with Rihanna and Katy Perry. It seems to be much more rare to land multiple hit songs as only 9 out of 50 had more than 3 Number 1 songs. Unlike the comparison between popular songs, there was greater overlap between the artists that generated chart topping hits and generally popular music that made the Top 100, implying that artists that were prolific in making generally popular songs were also capable of making the top of the charts. Notably, Taylor Swift, Drake, Justin Bieber and The Weeknd were the top individual singers who had the most Top 100 songs and also were also among the 16 artists with the most chart-topping songs. 
 
 ## What features define song popularity through the decades?
-  How has the definition of a popular song changed throughout the years? To explore different facets of musical popularity through the last 60 years, we take a broad look at popular songs, as described by their musical characteristics, between 1960 and 2021 and provide an overview across six complete decades and a snapshot into the current one. 
+How has the definition of a popular song changed throughout the years? To explore different facets of musical popularity through the last 60 years, we take a broad look at popular songs, as described by their musical characteristics, between 1960 and 2021 and provide an overview across six complete decades and a snapshot into the current one. 
 
 ```{r song feat by decade, echo = FALSE}
 
-song_features <- c("danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", "valence")
+song_features <- c("acousticness", "danceability", "energy", "instrumentalness", "liveness","loudness", "speechiness", "valence")
 
 top_5<- data %>% 
           filter(peak_position <= 5) %>%
@@ -139,9 +139,9 @@ top_5 %>%
 
 ```
 
-  To get a sense of what musical characteristics were apparent in the most popular songs of each decade, every song that reached a peak Billboard Chart position in the top 5 was examined. The distribution of the song characteristics was plotted, grouping the data together by the decade in which the song entered the Top 5. Since most of the descriptive characteristics provided by Spotify are scaled in a range of 0 to 1 (with the exception of “loudness” which we scaled to fit this range), the values can be compared year to year. 
+To get a sense of what musical characteristics were apparent in the most popular songs of each decade, every song that reached a peak Billboard Chart position in the top 5 was examined. The distribution of the song characteristics was plotted, grouping the data together by the decade in which the song entered the Top 5. Since most of the descriptive characteristics provided by Spotify are scaled in a range of 0 to 1 (with the exception of “loudness” which we scaled to fit this range), the values can be compared year to year. 
 
-  From the ridgeline plots, there are notably similar distributions in the song features regardless of the decade, primarily in speechiness, instrumentalness, and liveness. Most songs score low in these, indicating that listeners did not tend to prefer songs with spoken word, but also not songs that did not have any singing at all. One of the features that does see a shift in its distribution is valence; while there is a wide range of values in popular songs, it skews more positive in the 60’s - 80’s indicating a preference for songs with higher energy. There is a shift left from the 90’s to the 2010’s, indicating that popular songs could also sound more negative. There is also a change in how “danceable” a song is; while in the ‘60’s and ‘70’s, most songs seen to center on a medium amount of danceability, there is a shift of popular songs skewing toward more danceable from the 2000’s onwards with the average danceability increasing among popular songs. 
+From the ridgeline plots, there are notably similar distributions in the song features regardless of the decade, primarily in speechiness, instrumentalness, and liveness. Most songs score low in these, indicating that listeners did not tend to prefer songs with spoken word, but also not songs that did not have any singing at all. One of the features that does see a shift in its distribution is valence; while there is a wide range of values in popular songs, it skews more positive in the 60’s - 80’s indicating a preference for songs with higher energy. There is a shift left from the 90’s to the 2010’s, indicating that popular songs could also sound more negative. There is also a change in how “danceable” a song is; while in the ‘60’s and ‘70’s, most songs seen to center on a medium amount of danceability, there is a shift of popular songs skewing toward more danceable from the 2000’s onwards with the average danceability increasing among popular songs. 
 
 
 ```{r parcoord by decade, fig.width = 12, fig.height = 7, echo = FALSE}
@@ -167,11 +167,9 @@ ggparcoord(data = par_cord, columns = 2:10,
 
 
 ```
-  To compare changes in the song characteristics of individual songs in the 1960’s compared to more recent years in the 2010’s, data from songs that reached the top of the charts in each decade was pulled. Each song’s values for its descriptive song features were then plotted and colored by the decade. 
+To compare changes in the song characteristics of individual songs in the 1960’s compared to more recent years in the 2010’s, data from songs that reached the Number 1 position on the charts in each decade was pulled. Each song’s values for its descriptive song features were then plotted and colored by the decade. 
   
-  Surprisingly, there are many similarities between the trends of popular songs in the 1960s (red) vs the 2020s (blue). Songs generally showed a positive correlation between danceability and energy in both decades; unsurprisingly, songs with . Notably, the main changes are seen in speechiness; there is an opposite correlation between speechiness and loudness or speechiness and accousticness in the 2010’s compared to the 1960’s. 
-
-
+Surprisingly, there are some similarities between the trends of popular song composition in the 1960s (red) vs the 2020s (blue). For example, in both decades there is a general trend of songs with high energy having low instrumentalness, with only a few songs in the 1960’s having the opposite trend. Similarly, songs from both decades show a similar relationship between instrumentalness and liveness, as well as between liveness and loudness. However there are a few notable differences. While most songs of the 1960’s and manin in the 2010’s show the same relationship between speechiness (low) and valence (high), there are a few songs from the 2010’s that range in higher speechiness and show an opposite relationship with (lower) valence. From the parallel coordinates plot, it can also be seen that songs in the 1960’s generally ranged at higher loudness compared to songs in the 2010’s. Songs between both decades also show inverse correlation between accoustncess and danceability with most songs from 2010 having low accoustiness but high danceability. Most songs from the 2010’s show the same correlation between danceability and energy whereas there are songs inversely correlated among those in the 1960’s. Finally, while songs in both decade are of mode 0 and 1 (minor and major keys, respectively), almost all the songs in the 2010’s score low accoustiness regardless of the mode, whereas in the 60’s there are songs that show inverse correlation between mode and accoustiness. 
 
 ```{r genre by decade, fig.height = 13, fig.width = 12, echo = FALSE}
 genre_5 <- top_5 %>%
@@ -196,13 +194,12 @@ mosaic(Genre ~ Decade,
 
 ```
 
-  What genres were the most popular in each decade and have preferences changed? To answer this question, data from the most popular songs that peaked within the top 5 on the Billboard charts and the proportion of the total top songs associated with each genre was plotted. There is a notable shift in genres growing and waning in popularity between certain decades (and even some genres coming into existence in more recent years).  For example, it's evident that Folk music was quite popular in the 1960s, but became progressively less popular in subsequent decades, all but falling out of the Top 5 songs in the 2000s. Similarly, Blues were also popular in the ‘60’s but became less popular in the following two decades. Comparatively, Country became popular in the 1970’s, just as r&b became progressively more popular, especially in the 1990’s. Similarly, rap saw a surge in popularity starting from the 1990’s through the 2010’s. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. Other genres such as rock and pop have been mainstays of American music; both have retained similar amounts of popularity decade from the ‘60’s through the 70’s. Rock surged in the 80’s before becoming progressively less popular while pop grew in popularity beginning in the 2010’s.
-
+What genres were the most popular in each decade and have preferences changed? To answer this question, data from the most popular songs that peaked within the top 5 on the Billboard charts and the proportion of the total top songs associated with each genre was plotted. There is a notable shift in genres growing and waning in popularity between certain decades (and even some genres coming into existence in more recent years).  For example, it's evident that Folk music was quite popular in the 1960s, but became progressively less popular in subsequent decades, all but falling out of the Top 5 songs in the 2000s. Similarly, Blues were also popular in the ‘60’s but became less popular in the following two decades. Comparatively, Country became popular in the 1970’s, just as r&b became progressively more popular, especially in the 1990’s. Similarly, rap saw a surge in popularity starting from the 1990’s through the 2010’s. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. Other genres such as rock and pop have been mainstays of American music; both have retained similar amounts of popularity decade from the ‘60’s through the 70’s. Rock surged in the 80’s before becoming progressively less popular while pop grew in popularity beginning in the 2010’s.
 
 
 ## What defines a genre and what makes k-pop so unique?
-
-```{r AG Uniq songs}
+ 
+```{r AG Uniq songs,  fig.width = 12, fig.height = 8}
 rawdata <- readr::read_csv("billboard_spotify_cleaned_kpop.csv")
 rawdata$spotify_genre_clean <- as.factor(rawdata$spotify_genre_clean)
 rawdata$week_id <- as.Date(rawdata$week_id, format="%m/%d/%Y")
@@ -256,12 +253,12 @@ cbind(first, last[,-1]) %>%
   ggplot(mapping=aes(x=year, y=Freq,
                      color=Year_bin,
                      group=Year_bin)) +
-  geom_line() +
+  geom_line(size = 1.2) +
   scale_color_discrete(name="Year Charted") +
   scale_x_continuous(limits = c(1959, 2020)) +
   scale_y_continuous(limits = c(0, 800)) +
   labs(x="Year", y="Frequency",
-       title="Number of unique songs in the Top 100") +
+       title="Number of Unique songs in the Top 100") +
   theme(plot.title = element_text(size = 16, hjust=0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
@@ -271,7 +268,7 @@ cbind(first, last[,-1]) %>%
 
 A perennial sentiment throughout the generations--in the United States, at least-—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
 
-  We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2012/2013 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
+We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2012/2013 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
 
 
 ```{r AG Biplot of auditory features}
@@ -331,14 +328,14 @@ temp %>%
         legend.title = element_text(size = 14)) 
 ```
 
-  K-pop has been making a splash internationally in recent years, charting on the U.S. Billboard 100 for the first time in 2009 with “Nobody” by the Wonder Girls, and BTS maintaining a consistent presence since 2017. To some critics though, the genre is defined by its industry of boy/girl-group creation and performance components more than its unique sound, further compounded by the work of Western producers in its field.
+K-pop has been making a splash internationally in recent years, charting on the U.S. Billboard 100 for the first time in 2009 with “Nobody” by the Wonder Girls, and BTS maintaining a consistent presence since 2017. To some critics though, the genre is defined by its industry of boy/girl-group creation and performance components more than its unique sound, further compounded by the work of Western producers in its field.
 	
-	Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector, with tempo in second. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
+Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector, with tempo in second. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
 	
-	The k-pop songs are all found on the left half of the plot, with the exception of “Blue & Grey” by BTS. This marks k-pop hits in the U.S. as generally higher in tempo, liveness, loudness, and energy than the general American pop population. Despite a hallmark of the genre being dance accompaniments to every song, none of them falls particularly high along the danceability axis—however, this may be due to many of these songs also being high in tempo and bucking the general anticorrelation trend. With consideration to “Blue & Grey” as an outlier, it is an interesting example of how regionally-defined genres can be limiting. Within k-pop, in addition to dance anthems, slower and more stripped-down ballads are also another popular (if slightly less common) form of release, usually highlighting the vocal talents of specific group members. In this regard, “Blue & Grey” is unmistakably “k-pop,” but also deserving of a more accurate label that better captures the actual aural qualities of the song.
+The k-pop songs are all found on the left half of the plot, with the exception of “Blue & Grey” by BTS. This marks k-pop hits in the U.S. as generally higher in tempo, liveness, loudness, and energy than the general American pop population. Despite a hallmark of the genre being dance accompaniments to every song, none of them falls particularly high along the danceability axis—however, this may be due to many of these songs also being high in tempo and bucking the general anticorrelation trend. With consideration to “Blue & Grey” as an outlier, it is an interesting example of how regionally-defined genres can be limiting. Within k-pop, in addition to dance anthems, slower and more stripped-down ballads are also another popular (if slightly less common) form of release, usually highlighting the vocal talents of specific group members. In this regard, “Blue & Grey” is unmistakably “k-pop,” but also deserving of a more accurate label that better captures the actual aural qualities of the song.
 
 
-```{r AG parcoords kpop}
+```{r AG parcoords kpop, fig.width = 12, fig.height=7}
 fulldata %>%
   mutate(year = as.numeric(format(first_week, format="%Y"))) %>%
   # mutate(year = as.numeric(format(first_week, format="%Y")),
@@ -359,6 +356,6 @@ fulldata %>%
         legend.title = element_text(size = 14)) 
 ```
 
-  To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.
-  
-  Within this reduced dataset, we see more clearly many of the same relationships between audio features as first observed in the previous biplot. Additionally, we can observe the clustering of songs towards the minimums of speechiness and liveness, hence their smaller rotation vectors and reduced power in explaining variance. The k-pop hits maintain similar patterns across the parallel coordinates plot, with the most variance in danceability. K-pop is also slightly over-represented in the upper ends of speechiness, which corresponds to the commonality of a “rap section” in many k-pop songs, due to how their groups are structured.
+To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.
+
+Within this reduced dataset, we see more clearly many of the same relationships between audio features as first observed in the previous biplot. Additionally, we can observe the clustering of songs towards the minimums of speechiness and liveness, hence their smaller rotation vectors and reduced power in explaining variance. The k-pop hits maintain similar patterns across the parallel coordinates plot, with the most variance in danceability. K-pop is also slightly over-represented in the upper ends of speechiness, which corresponds to the commonality of a “rap section” in many k-pop songs, due to how their groups are structured.

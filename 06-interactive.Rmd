@@ -1,6 +1,6 @@
 # Interactive component
 
-<iframe src="index_interactive.html" width="800" height="600"></iframe>
+<iframe src="index_interactive.html" width="800" height="600" frameBorder="0"></iframe>
 
 You can also access the plot on VizHub:
 https://vizhub.com/jw4169/20ca79535ad2415383c09787459a5d22?edit=files&file=index.html

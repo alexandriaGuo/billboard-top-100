@@ -235,10 +235,22 @@
 
                         var mousemove = function mousemove(e, d) {
                                 var coords = d3.pointer(event,this)
-                                focus.attr("transform", "translate(" + coords[0] + "," + coords[1] + ")");
+                                focus.attr("transform", "translate(" + (coords[0]-60) + "," + (coords[1]-60) + ")");
                                 focus.select(".tooltip-genre").text(e.path[0].__data__[0].genre);
                                 focus.select(".tooltip-song").text(e.path[0].__data__[0].song);
                                 focus.select(".tooltip-performer").text(e.path[0].__data__[0].performer);
+                                var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
+                                                        focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
+                                // +60 to offset for the song/artist text
+                                focus.select(".tooltip").attr("width", tooltipWidth + 60);
+                            };
+
+                        var mousemove_dot = function mousemove_dot(e, d) {
+                                var coords = d3.pointer(event,this)
+                                focus.attr("transform", "translate(" + (coords[0]-60) + "," + (coords[1]-60) + ")");
+                                focus.select(".tooltip-genre").text(e.path[0].__data__.genre);
+                                focus.select(".tooltip-song").text(e.path[0].__data__.song);
+                                focus.select(".tooltip-performer").text(e.path[0].__data__.performer);
                                 var tooltipWidth = focus.select(".tooltip-song").node().getComputedTextLength() > focus.select(".tooltip-performer").node().getComputedTextLength() ?
                                                         focus.select(".tooltip-song").node().getComputedTextLength() : focus.select(".tooltip-performer").node().getComputedTextLength();
                                 // +60 to offset for the song/artist text
@@ -267,7 +279,7 @@
                                         .attr("stroke", "lightgrey")
                                         .attr("stroke-opacity", 0.5);
                                     d3.select(this)
-                                        .attr("fill", "#92D1C3")
+                                        .attr("fill", "#B8D4E3")
                                         .attr("fill-opacity", 1);
                                     focus.style("display", null)
                                     focus.raise();
@@ -283,7 +295,7 @@
                                     focus.style("display", "none");
                                 })
                                 .on("mousemove", function(event, d) {
-                                    mousemove(event, d)
+                                    mousemove_dot(event, d)
                                 });
                         } else {
                             songLines = svg.append("path")
@@ -302,7 +314,7 @@
                                     .attr("fill", "lightgrey")
                                     .attr("fill-opacity", 0.5);
                                 d3.select(this)
-                                    .attr("stroke", "#92D1C3")
+                                    .attr("stroke", "#B8D4E3")
                                     .attr("stroke-opacity", 1)
                                     .attr('stroke-width', "4.5px");
                                 focus.style("display", null)
@@ -437,7 +449,7 @@
                                         .attr("stroke", "lightgrey")
                                         .attr("stroke-opacity", 0.5);
                                     d3.select(this)
-                                        .attr("fill", "#92D1C3")
+                                        .attr("fill", "#B8D4E3")
                                         .attr("fill-opacity", 1);
                                     focus.style("display", null)
                                     focus.raise();
@@ -452,8 +464,8 @@
                                         .attr("fill-opacity", 1);
                                     focus.style("display", "none");
                                 })
-                                .on("mousemove", d => function(d) {
-                                    mousemove(d)
+                                .on("mousemove", function(event, d) {
+                                    mousemove_dot(event, d)
                                 });
                             } else {
                                 newSongLines = svg.append("path")
@@ -472,7 +484,7 @@
                                         .attr("fill", "lightgrey")
                                         .attr("fill-opacity", 0.5);
                                     d3.select(this)
-                                        .attr("stroke", "#92D1C3")
+                                        .attr("stroke", "#B8D4E3")
                                         .attr("stroke-opacity", 1)
                                         .attr('stroke-width', "4.5px");
                                     focus.style("display", null)

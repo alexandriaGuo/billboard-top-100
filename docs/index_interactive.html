@@ -76,7 +76,7 @@
         <script type="text/javascript">
             // create SVG for our alluvial plot
             // todo update to use top,bottom,right,left padding
-            
+
             var w = 800
             var h = 480
             var padding = 50;
@@ -186,7 +186,7 @@
                     yAxis = d3.axisLeft()
                                 .scale(yScale)
                                 .tickValues(d3.range(1,51))
-                    
+
                     svg.append("g")
                         .attr("class", "xaxis")
                         .attr("transform", "translate(0," + (h - padding) + ")")
@@ -214,14 +214,14 @@
                         .style("font-weight", 600)
                         .style("text-anchor", "left")
                         .text("Interactive Billboard Top 50 Ranking (2011-2021)");
-                    
+
                     svg.append("text")
                         .attr("class", "subtitle")
                         .attr("x", padding)
                         .attr("y", 30)
                         .style("font-size", 14)
                         .style("text-anchor", "left")
-                        .text("An alluvial plot of Top 50 song movement on the chart. Hover for additional song info.");
+                        .text("An alluvial plot of Top 50 song movement on the chart. Use slider at the bottom to select month and year. Hover for additional song info.");
 
                     // create line generator for the alluvial
                     var line = d3.line()
@@ -335,7 +335,7 @@
                         .domain([startDate, endDate])
                         .range([0, w-padding])
                         .clamp(true);
-                    
+
                     var slider = svg.append("g")
                                     .attr("class", "date-slider")
                                     .attr("transform", "translate(" + padding + "," + h + ")");
@@ -349,7 +349,7 @@
                         .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
                             .attr("class", "track-overlay")
                             .call(d3.drag()
-                                .on("end", function() { 
+                                .on("end", function() {
                                     slider.interrupt();
                                 })
                                 .on("drag", function(event) { updateChart(xSlider.invert(event.x)); }));
@@ -377,7 +377,7 @@
                         .attr("class", "handle")
                         .attr("r", 9)
                         .attr("cx", xSlider(starterDate));
-                    
+
                     function updateChart(d) {
                         handle.attr("cx", xSlider(d));
                         label
@@ -385,11 +385,11 @@
                             .text(formatDate(d));
 
                         var date = formatDate(d)
-                        
+
                         // refilter date
                         var newFilteredData = dataset.filter( x => { return x.week_id.getMonth() == d.getMonth() && x.week_id.getYear() == d.getYear()})
                                     .sort(function(a, b) {return a.week_id - b.week_id });
-                        
+
                         var newSongNames = Array.from(new Set(newFilteredData.map(d => d.song )));
 
                         var newDates = [...new Set(newFilteredData.map(d=>d.week_id).map((dateObject)=>dateObject.toDateString()))];
@@ -415,7 +415,7 @@
                             var newSongData = newFilteredData.filter( d => { return d.song == newSongNames[i]})
                             // if a song only shows up once in the top 100 for this month, we need to draw a point instead of a line b/c lines can't have length of 0.
                             if (newSongData.length == 1) {
-                        
+
                                 newSongDots = svg.selectAll(`#circle_${i}`)
                                     .data(newSongData)
                                     .enter()

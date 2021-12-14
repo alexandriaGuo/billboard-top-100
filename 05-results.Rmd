@@ -208,7 +208,7 @@ rawdata$spotify_genre_clean <- as.factor(rawdata$spotify_genre_clean)
 rawdata$week_id <- as.Date(rawdata$week_id, format="%m/%d/%Y")
 
 data <- rawdata
-data$missing <-ifelse(rowSums(is.na(data)) >= 1, TRUE, FALSE)
+data$Missing <-ifelse(rowSums(is.na(data)) >= 1, TRUE, FALSE)
 # sort by (week?), song, then artist
 data <- data[order(data$performer,
                    data$song,
@@ -228,7 +228,7 @@ uniqdata <- data %>%
            "danceability", "energy", "loudness", 
            "speechiness", "acousticness", "instrumentalness",
            "liveness", "valence",
-           "missing", # custom column
+           "Missing", # custom column
            "spotify_genre", "spotify_track_popularity")) %>% 
   # keeping original genre to check
   unique() %>%
@@ -261,47 +261,22 @@ cbind(first, last[,-1]) %>%
   scale_x_continuous(limits = c(1959, 2020)) +
   scale_y_continuous(limits = c(0, 800)) +
   labs(x="Year", y="Frequency",
-       title="Number of unique songs in the Top 100")  +
-  theme_gray()
+       title="Number of unique songs in the Top 100") +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14)) 
 ```
 
-A perennial sentiment throughout the generations—--in the United States, at least--—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
+A perennial sentiment throughout the generations--in the United States, at least-—is that the pop music of today is less lyrically complex ^[https://pudding.cool/projects/vocabulary/index.html] ^[https://pudding.cool/2017/05/song-repetition/], less auditorily diverse ^[https://pudding.cool/2018/05/similarity/], and just generally “worse.” Looking at the full dataset of unique songs that have charted in the Top 100 from 1958 to 2021, however, we notice an interesting trend where the total number of such songs briefly increases from the chart’s creation up until 1966 and then declines until a low point in 2001. From there, the number of songs rapidly increases again, up until the present. Based on this plot, we might infer that quality aside, modern pop music is seeing a boom in production today.
 
-  We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2007 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
+  We plot a count of unique songs based on both the “first week” charted and “last week” charted, to investigate if the above effect could be attributed to songs getting significant replay value past their initial release. The two ways of “rounding” a song’s year yield almost identical lines, however, which seems to disprove this theory. This should also be evident from the vast majority of songs charting only once. An alternative explanation for the increase comes from the history of the Billboard 100 ^[https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer], where 1998 marked a shift from the “Hot 100” being a “singles” chart to a “songs” chart, broadening the pool of eligible songs. Further increases could also be attributed to the Billboard gradually incorporating digital sales and streaming numbers as well in 2005 and 2012/2013 respectively, adapting to modern ways of music consumption. Perhaps this change caused the number of songs in the Top 100 to increase due to the new policies better capturing “virality” and what is often perceived as the ever-decreasing life cycle of what is trending. As later analyses will show though, some of the longest-lasting songs in the charts have also been born in the most recent decade.
 
 
 ```{r AG Biplot of auditory features}
 fulldata <- na.omit(uniqdata)
 
-# histogram of song popularity
-fulldata %>%
-  pivot_longer(cols=c(total_peak,
-                      total_instances,
-                      total_weeks,
-                      spotify_track_popularity),
-               names_to = "feature",
-               values_to = "value") %>%
-  ggplot(mapping=aes(value)) +
-  geom_histogram() +
-  facet_wrap(~feature, scales="free") +
-  labs(x="Value", y="Count",
-       title="Spreads of song popularity measures") +
-  theme_gray()
-
-# histogram of all features
-fulldata %>%
-  pivot_longer(cols=key:valence,
-               names_to = "feature",
-               values_to = "value") %>%
-  ggplot(mapping=aes(value)) +
-  geom_histogram() +
-  facet_wrap(~feature, scales="free") +
-  labs(x="Value", y="Count",
-       title="Spreads of musical features") +
-  theme_gray()
-# thus choose acousticness (12), danceability (8), energy (9), 
-# liveness (14), loudness (10), tempo (6), and valence (15)
-# included speechiness (11) despite reducing variance explained to match other analyses
 featcols <- c(6,8,9,10,11,12,14,15)
 
 pcs <- prcomp(fulldata[which(fulldata$first_week > 2000),
@@ -322,15 +297,17 @@ datapc <- transform(datapc,
 temp <- cbind(data.frame(pcs$x), fulldata[which(fulldata$first_week > 2000),]) %>%
   filter(total_peak <= 50) %>% 
   mutate(BTS=ifelse(str_detect(performer, regex('BTS', ignore_case=TRUE)) |
-                            str_detect(performer, regex('j-hope', ignore_case=TRUE)), TRUE, FALSE))
+                            str_detect(performer, regex('j-hope', ignore_case=TRUE)), "True", "False"),
+         spotify_genre_clean = recode(spotify_genre_clean, 
+                                               "kpop" = "K-pop", "other" = "Other"))
 
 temp %>% 
   ggplot(aes(x=PC1, y=PC2)) +
   geom_point(aes(color = spotify_genre_clean, 
                  alpha = 0.01, stroke = 0)) +
-  geom_point(subset(temp, spotify_genre_clean == 'kpop'),
+  geom_point(subset(temp, spotify_genre_clean == 'K-pop'),
              mapping=aes(color = spotify_genre_clean,
-             shape=as.factor(BTS))) +
+             shape=fct_relevel(as.factor(BTS), "True", "False"))) +
   geom_text(data=datapc, aes(x=v1, y=v2, label=varnames),
             nudge_x=ifelse(datapc$v1 > 0, 0.3, -0.3),
             nudge_y=ifelse(datapc$v2 > 0, 0.4, -0.4), 
@@ -342,16 +319,21 @@ temp %>%
   scale_alpha(guide="none") +
   scale_size(guide="none") +
   scale_color_discrete(name="Genre") +
-  scale_shape_discrete(name="BTS") + # make cleaner
+  scale_shape_manual(name="BTS",
+                      values = c("triangle","circle")) +
   labs(x=paste("PC 1 (",format(expvar[1], digits=3),"%)"),
        y=paste("PC 2 (",format(expvar[2], digits=3),"%)"),
-       title="Biplot of musical features for Top 50 songs since 2000") +
-  theme_gray()
+       title="Biplot of musical features for Top 50 songs since 2000")  +
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14)) 
 ```
 
   K-pop has been making a splash internationally in recent years, charting on the U.S. Billboard 100 for the first time in 2009 with “Nobody” by the Wonder Girls, and BTS maintaining a consistent presence since 2017. To some critics though, the genre is defined by its industry of boy/girl-group creation and performance components more than its unique sound, further compounded by the work of Western producers in its field.
 	
-	Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
+	Here, we use principal component analysis to analyze the auditory qualities of songs: specifically acousticness, danceability, energy, liveness, loudness, speechiness, tempo, and valence. These variables were chosen because they are continuous, with values reasonably distributed among all songs in the dataset. We also restrict the songs to those first charting after 2000, to only compare k-pop songs popular in the U.S. to their contemporaries. From this chart, we can see that while the distribution of songs is mostly circular, the largest spread is along the acousticness vector, with tempo in second. This is also somewhat anticorrelated to energy, and tempo to danceability. Acousticness and energy, then, are also more uncorrelated with tempo and danceability, or valence to loudness. All of these associations make intuitive sense, and are corroborated by Spotify’s documentation.
 	
 	The k-pop songs are all found on the left half of the plot, with the exception of “Blue & Grey” by BTS. This marks k-pop hits in the U.S. as generally higher in tempo, liveness, loudness, and energy than the general American pop population. Despite a hallmark of the genre being dance accompaniments to every song, none of them falls particularly high along the danceability axis—however, this may be due to many of these songs also being high in tempo and bucking the general anticorrelation trend. With consideration to “Blue & Grey” as an outlier, it is an interesting example of how regionally-defined genres can be limiting. Within k-pop, in addition to dance anthems, slower and more stripped-down ballads are also another popular (if slightly less common) form of release, usually highlighting the vocal talents of specific group members. In this regard, “Blue & Grey” is unmistakably “k-pop,” but also deserving of a more accurate label that better captures the actual aural qualities of the song.
 
@@ -363,12 +345,18 @@ fulldata %>%
   #       BTS = ifelse(str_detect(performer, regex('BTS', ignore_case=TRUE)) |
   #        str_detect(performer, regex('j-hope', ignore_case=TRUE)), "BTS", spotify_genre_clean)) %>%
   filter(((year >= 2015) & (total_peak <= 1)) | 
-           (spotify_genre_clean == "kpop")) %>%
+           (spotify_genre_clean == "kpop")) %>% 
+  mutate(spotify_genre_clean = recode(spotify_genre_clean, 
+                                       "kpop" = "K-pop", "other" = "Other")) %>%
   ggparcoord(columns = featcols, scale="uniminmax", alphaLines=0.5, splineFactor=10,
              groupColumn = "spotify_genre_clean") + #groupColumn = 'BTS') +
+  scale_color_discrete(name="Genre") +
   labs(title="Auditory features of Top 1 songs since 2015", x="Auditory features", y="Count") +
-  scale_color_discrete(guide="none") +
-  theme_gray()
+  theme(plot.title = element_text(size = 16, hjust=0.5),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 14)) 
 ```
 
   To further analyze this data, we subset the general population of pop songs to only those peaking at rank 1 on Top 100 and reduce the range of permissible debut years to 2015 and onwards, due to the majority of U.S Billboard-charting k-pop songs being released in this range.

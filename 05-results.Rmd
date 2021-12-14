@@ -5,6 +5,8 @@ data <- readr::read_csv("billboard_spotify_cleaned_final.csv")
 ```
 
 ## What features define song popularity through the decades?
+  How has the definition of a popular song changed throughout the years? To explore different facets of musical popularity through the last 60 years, we take a broad look at popular songs, as described by their musical characteristics, between 1960 and 2021 and provide an overview across six complete decades and a snapshot into the current one. 
+
 ```{r song feat by decade, echo = FALSE}
 
 song_features <- c("danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", "valence")
@@ -40,7 +42,10 @@ top_5 %>%
 
 ```
 
-Songs that reached a peak position in the top 5 were pulled from the charts and their song features were plotted. Faceting the data by decade (the 1950s were omitted since it was an incomplete decade, however the 2020s were kept since it is more recent and relevant), there are notably similar distributions in the song features regardless of the decade. One of the features that does see a shift in its distribution is valence; while it skews more positive in the 60’s - 80’s, there is a shift left from the 90’s to the 2010’s. There is also a change in how danceable a song is; while there is a larger spread in the 1970s, there is a noticeable shift of popular songs skewing toward more danceable from the 2000’s onwards.  
+  To get a sense of what musical characteristics were apparent in the most popular songs of each decade, every song that reached a peak Billboard Chart position in the top 5 was examined. The distribution of the song characteristics was plotted, grouping the data together by the decade in which the song entered the Top 5. Since most of the descriptive characteristics provided by Spotify are scaled in a range of 0 to 1 (with the exception of “loudness” which we scaled to fit this range), the values can be compared year to year. 
+
+  From the ridgeline plots, there are notably similar distributions in the song features regardless of the decade, primarily in speechiness, instrumentalness, and liveness. Most songs score low in these, indicating that listeners did not tend to prefer songs with spoken word, but also not songs that did not have any singing at all. One of the features that does see a shift in its distribution is valence; while there is a wide range of values in popular songs, it skews more positive in the 60’s - 80’s indicating a preference for songs with higher energy. There is a shift left from the 90’s to the 2010’s, indicating that popular songs could also sound more negative. There is also a change in how “danceable” a song is; while in the ‘60’s and ‘70’s, most songs seen to center on a medium amount of danceability, there is a shift of popular songs skewing toward more danceable from the 2000’s onwards with the average danceability increasing among popular songs. 
+
 
 ```{r parcoord by decade, fig.width = 12, fig.height = 7, echo = FALSE}
 
@@ -65,7 +70,10 @@ ggparcoord(data = par_cord, columns = 2:10,
 
 
 ```
-Surprisingly, there are many similarities between the trends of popular songs in the 1960s vs the 2020s. There is generally a positive correlation between danceability and energy in both decades. Notably, the main changes are seen in speechiness; there is an opposite correlation between speechiness and loudness or speechiness and accousticness in the 2010’s compared to the 1960’s.
+  To compare changes in the song characteristics of individual songs in the 1960’s compared to more recent years in the 2010’s, data from songs that reached the top of the charts in each decade was pulled. Each song’s values for its descriptive song features were then plotted and colored by the decade. 
+  
+  Surprisingly, there are many similarities between the trends of popular songs in the 1960s (red) vs the 2020s (blue). Songs generally showed a positive correlation between danceability and energy in both decades; unsurprisingly, songs with . Notably, the main changes are seen in speechiness; there is an opposite correlation between speechiness and loudness or speechiness and accousticness in the 2010’s compared to the 1960’s. 
+
 
 
 ```{r genre by decade, fig.height = 13, fig.width = 12, echo = FALSE}
@@ -90,7 +98,9 @@ mosaic(Genre ~ Decade,
        main = 'Top 5 Songs by Genre Across the Decades')
 
 ```
-Again, data from the 1950s was omitted since it was an incomplete decade (though data from the 2020s was kept since it is more recent and relevant). Notably, there is a shift (and creation) of some genres becoming more or less popular during certain decades. For example, it's evident that Blues were popular in the 1950s but have progressively become less popular in subsequent decades whereas Country became more popular, peaking in the 70s before losing relative popularity. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. 
+
+  What genres were the most popular in each decade and have preferences changed? To answer this question, data from the most popular songs that peaked within the top 5 on the Billboard charts and the proportion of the total top songs associated with each genre was plotted. There is a notable shift in genres growing and waning in popularity between certain decades (and even some genres coming into existence in more recent years).  For example, it's evident that Folk music was quite popular in the 1960s, but became progressively less popular in subsequent decades, all but falling out of the Top 5 songs in the 2000s. Similarly, Blues were also popular in the ‘60’s but became less popular in the following two decades. Comparatively, Country became popular in the 1970’s, just as r&b became progressively more popular, especially in the 1990’s. Similarly, rap saw a surge in popularity starting from the 1990’s through the 2010’s. Some genres such as edm and kpop didn't even exist in earlier decades, and did not show any popularity until the last 10 years. Other genres such as rock and pop have been mainstays of American music; both have retained similar amounts of popularity decade from the ‘60’s through the 70’s. Rock surged in the 80’s before becoming progressively less popular while pop grew in popularity beginning in the 2010’s.
+
 
 
 ## What artists and songs have trended since 2000?
@@ -165,7 +175,7 @@ ggplot(top_artists, aes(x = n, y = reorder(performer, n))) +
         axis.text = element_text(size = 12))
 
 ```
-
+  Instead of looking on at individual songs, we also wanted to explore who the most popular artists were after the turn of the millennium. Similar to viewing songs that stayed the longest in the Top 100, we plotted the top 50 artists who had the most songs enter the Top 100 Charts. Interestingly, the 3 artists with the most songs had more than double the number of songs chart compared to the rest. The Glee Cast is credited with 183 songs while Taylor Swift and Drake are credited with 119 and 99 songs, respectively. The Glee Cast appear to be unusually prolific due to covers being released alongside the popular TV show and they rarely make it to the top, but otherwise, most of the top artists are not ensembles.
 
 
 
@@ -187,8 +197,8 @@ ggplot(top_artists_1, aes(x = n, y = reorder(performer, n))) +
         axis.text = element_text(size = 12))
 
 ```
+  We also looked at the artists who had the most No.1 ranked songs and noticed that popular artists had far fewer songs make the number 1 spot, with the leading 3 artists featuring only six songs each. Taylor Swift had the most Number 1 songs, tied with Rihanna and Katy Perry. It seems to be much more rare to land multiple hit songs as only 9 out of 50 had more than 3 Number 1 songs. Unlike the comparison between popular songs, there was greater overlap between the artists that generated chart topping hits and generally popular music that made the Top 100, implying that artists that were prolific in making generally popular songs were also capable of making the top of the charts. Notably, Taylor Swift, Drake, Justin Bieber and The Weeknd were the top individual singers who had the most Top 100 songs and also were also among the 16 artists with the most chart-topping songs. 
 
-Insight:
 
 ## What defines a genre and what makes k-pop so unique?
 
